@@ -94,6 +94,8 @@ public class ArtistServiceImpl implements ArtistService{
     public List<ArtistVo> getRecommendArtist() {
         List<ArtistVo> resultList = new ArrayList<ArtistVo>();
 
+
+
         return null;
     }
 }
