@@ -40,22 +40,16 @@ public class ArtistController {
         Integer pageNum = Integer.valueOf(fpage);
         Integer pageSize= 10;
 
-        if( cateId==null || cateId==0L){
-            //不传cateId 获取推荐数据按照权重
-
-
-            return ResponseUtils.getSuccessResponse(null);
-        } else {
-            DataCollectionVo<ArtistVo> dataCollectionVo = new DataCollectionVo<ArtistVo>();
-            List<ArtistVo> result = artistService.getArtistByCateId(cateId,pageNum,pageSize);
-            dataCollectionVo.setList(result);
-            Integer nextPage = pageNum + 1;
-            dataCollectionVo.setFpage(nextPage+"");
-            if(CollectionUtils.isEmpty(result) || result.size()<pageSize ){
-                dataCollectionVo.setEnd(true);
-            }
-            return ResponseUtils.getSuccessResponse(dataCollectionVo);
+        DataCollectionVo<ArtistVo> dataCollectionVo = new DataCollectionVo<ArtistVo>();
+        List<ArtistVo> result = artistService.getArtistByCateId(cateId,pageNum,pageSize);
+        dataCollectionVo.setList(result);
+        Integer nextPage = pageNum + 1;
+        dataCollectionVo.setFpage(nextPage+"");
+        if(CollectionUtils.isEmpty(result) || result.size()<pageSize ){
+            dataCollectionVo.setEnd(true);
         }
+        return ResponseUtils.getSuccessResponse(dataCollectionVo);
+
     }
 
     /**

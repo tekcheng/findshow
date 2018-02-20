@@ -6,6 +6,8 @@ import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.*;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -32,8 +34,14 @@ public class AliyunOssUtils {
                 createBucketRequest.setCannedACL(CannedAccessControlList.PublicRead);
                 ossClient.createBucket(createBucketRequest);
             }
-            // 创建文件路径
-            String fileUrl = System.currentTimeMillis()+"-"+file.getName();
+
+            //创建文件路径  当天日期／时间戳-文件名
+            String beginDate = System.currentTimeMillis()+"";
+            SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+            String path = sdf.format(new Date(Long.parseLong(beginDate)));
+            String fileName = System.currentTimeMillis()+"-"+file.getName();
+
+            String fileUrl = path+"/"+fileName;
             // 上传文件
             PutObjectResult result = ossClient.putObject(new PutObjectRequest(bucketName, fileUrl, file));
             if (null != result) {
@@ -57,5 +65,13 @@ public class AliyunOssUtils {
         ossClient.deleteObject(bucketName, key);
     }
 
+
+    public static void main(String[] args) {
+
+        String beginDate = System.currentTimeMillis()+"";
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+        String sd = sdf.format(new Date(Long.parseLong(beginDate)));
+        System.out.println(sd);
+    }
 
 }

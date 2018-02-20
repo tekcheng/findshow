@@ -51,8 +51,6 @@ public class ArtistServiceImpl implements ArtistService{
         if(pageNum==null || pageNum<0) pageNum=0;
 
         List<ArtistVo> resultList = new ArrayList<ArtistVo>();
-        if (cateId == null || cateId<0)
-            return resultList;
 
         Sort.Order order1 = new Sort.Order(Sort.Direction.DESC,"sort");
         Sort.Order order2 = new Sort.Order(Sort.Direction.DESC,"created");
@@ -68,7 +66,7 @@ public class ArtistServiceImpl implements ArtistService{
          * cateId 为0 拉去全部
          */
         List<Artist> artistList = new ArrayList<Artist>();
-        if( cateId==0L ){
+        if( cateId==null || cateId==0L ){
             artistList = artistRepository.findByIsDeleted(DeleteCodeEnum.NOT_DELETEED.getCode(),pageable).getContent();
         } else {
             artistList = artistRepository.findByCategoryIdAndIsDeleted(cateId, DeleteCodeEnum.NOT_DELETEED.getCode(),pageable).getContent();

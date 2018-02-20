@@ -224,7 +224,7 @@
                    ],
                     initialPreviewConfig: [
                     	<#list imgList as img>
-                    		{caption: "Food-1.jpg", size: 329892, url: "/op/artist/delete/img", key: "${img.id}" },
+                    		{caption: "${img.url}", url: "/op/artist/delete/img", key: "${img.id}" },
                     	</#list>
                     ]
 
@@ -260,7 +260,11 @@
 				$("#artist_form_sub").click(function(){
                     if( !isSub ){
                         isSub = true;
-                        $("#artist_images").fileinput("upload");
+                        if( $("#artist_images").val()!="" ){
+                        	$("#artist_images").fileinput("upload");
+                        }else{
+                        	$("#artist_form").submit();
+                        }
                     }
                 });
 			});
