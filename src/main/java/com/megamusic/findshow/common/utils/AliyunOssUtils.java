@@ -4,6 +4,7 @@ import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.*;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -13,6 +14,7 @@ import java.util.Date;
 /**
  * Created by chengchao on 2018/2/13.
  */
+@Component
 public class AliyunOssUtils {
 
     private static String endpoint = "oss-cn-beijing.aliyuncs.com";
@@ -63,15 +65,6 @@ public class AliyunOssUtils {
     public static void delete( String bucketName,String key ){
         OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
         ossClient.deleteObject(bucketName, key);
-    }
-
-
-    public static void main(String[] args) {
-
-        String beginDate = System.currentTimeMillis()+"";
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
-        String sd = sdf.format(new Date(Long.parseLong(beginDate)));
-        System.out.println(sd);
     }
 
 }

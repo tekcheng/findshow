@@ -1,10 +1,13 @@
 package com.megamusic.findshow.common.utils;
 
+import org.springframework.stereotype.Component;
+
 import java.security.MessageDigest;
 
 /**
  * Created by maita on 17/8/23.
  */
+@Component
 public class CommonUtils {
     public final static String MD5(String pwd) {
         //用于加密的字符
@@ -41,7 +44,4 @@ public class CommonUtils {
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println(MD5("http://www.baidu.com"));
-    }
 }
