@@ -1,0 +1,20 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    文件上传:
+    <form method="post" enctype="multipart/form-data" action="/common/upload" >
+        <input type="file" name="fileName" />
+        <input type="submit" name="上传" />
+    </form>
+
+
+    批量上传:
+    <form method="post" enctype="multipart/form-data" action="/common/batchUpload" >
+        <input type="file" multiple="multiple" name="fileName" />
+        <input type="submit" name="上传" />
+    </form>
+</body>
+
+</html>

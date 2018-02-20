@@ -1,12 +1,29 @@
 package com.megamusic.findshow.controller;
 
+import com.aliyun.oss.ClientException;
+import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.OSSException;
+import com.aliyun.oss.model.*;
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.IAcsClient;
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
+import com.aliyuncs.profile.DefaultProfile;
+import com.aliyuncs.profile.IClientProfile;
+import com.megamusic.findshow.common.utils.AliyunOssUtils;
 import com.megamusic.findshow.service.ArtistService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.io.*;
 
 
 /**
@@ -35,20 +52,31 @@ public class TestController {
         return "yeah~!";
     }
 
+    @RequestMapping("tpl")
+    public ModelAndView tpl(){
+
+        ModelAndView mv = new ModelAndView("list");
+        mv.addObject("msg", "啊啊啊啊啊啊啊啊");
+        mv.setViewName("list");
+        return mv;
+    }
+
+
+
 //    @RequestMapping("send")
 //    @ResponseBody
 //    public Object sendsms() throws ClientException {
 //        return sendSms();
 //    }
 //
-    //产品名称:云通信短信API产品,开发者无需替换
-    static final String product = "Dysmsapi";
-    //产品域名,开发者无需替换
-    static final String domain = "dysmsapi.aliyuncs.com";
-
-    // TODO 此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
-    static final String accessKeyId = "LTAIO3aygVkKcnaJ";
-    static final String accessKeySecret = "WWHvsi72TKvBlhyznQkVBCyj3DZr0J";
+//    //产品名称:云通信短信API产品,开发者无需替换
+//    static final String product = "Dysmsapi";
+//    //产品域名,开发者无需替换
+//    static final String domain = "dysmsapi.aliyuncs.com";
+//
+//    // TODO 此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
+//    static final String accessKeyId = "LTAIO3aygVkKcnaJ";
+//    static final String accessKeySecret = "WWHvsi72TKvBlhyznQkVBCyj3DZr0J";
 
 //    public static SendSmsResponse sendSms() throws ClientException {
 //
@@ -82,6 +110,13 @@ public class TestController {
 //        SendSmsResponse sendSmsResponse = acsClient.getAcsResponse(request);
 //        return sendSmsResponse;
 //    }
+
+
+
+
+
+
+
 
 
 }

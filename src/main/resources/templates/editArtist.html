@@ -1,0 +1,269 @@
+<#include "public/header.html">
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<#include "public/menu.html">
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">主页</a>
+							</li>
+
+							<li>
+								<a href="#">艺人管理</a>
+							</li>
+							<li class="active">艺人编辑</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								艺人信息编辑
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+								<form class="form-horizontal" role="form" id="artist_form" action="/op/artist/editDo" method="post" enctype="multipart/form-data">
+									<div class="control-group">
+										<input type='hidden'  name='artist_id' value='${artist.id}'>
+								          <!-- Text input-->
+								          <label class="control-label" for="artist_name">艺人名称 ：</label>
+								          <div class="controls">
+								            <input type="text" placeholder="" class="input-xlarge" id="artist_name" name="artist_name" value="${artist.name}">
+								          </div>
+								    </div>
+
+								    <div class="control-group">
+								    	<br/>
+							          <!-- Textarea -->
+							          <label class="control-label" for="artist_desc">简介：</label>
+							          <div class="controls">
+							            <div class="textarea">
+							                  <textarea lass="form-control" id="artist_desc" cols="80" rows="10" name="artist_desc">${artist.description}</textarea>
+							            </div>
+							          </div>
+							        </div>
+									
+									<div class="control-group">
+										<br/>
+										<label for="artist_cate">分类：</label>
+
+										<br/>
+										<select class="width-20 chosen-select" id="artist_cate" name="artist_cate" data-placeholder="Choose category...">
+                                            <option value="">选择分类</option>
+                                            <#list cateList as _cl>
+                                                <option value="${_cl.id}"  <#if _cl.id == artist.categoryId?string > selected="selected" </#if>  >${_cl.name}</option>
+                                            </#list>
+										</select>
+									</div>
+
+									<div class="control-group">
+										<br/>
+								          <!-- Text input-->
+								          <label class="control-label" for="artist_sort">权重 ：</label>
+								          <div class="controls">
+								            <input type="text" placeholder="填写0-999数字" class="input-xsmall" id="artist_sort" name="artist_sort" value="${artist.sort}">
+								          </div>
+								    </div>
+									
+								    <div class="control-group">
+								    	<br/>
+								          <!-- Text input-->
+								          <label class="control-label" for="artist_video">视频地址 ：</label>
+								          <div class="controls">
+								            <input type="text" placeholder="" class="input-xlarge" id="artist_video" name="artist_video" value="${artist.videoInfo}">
+								          </div>
+								    </div>
+
+                                    <div id="artist_images_div">
+                                    	<#list imgList as img>
+					          				<input type='hidden'  name='images' value='${img.url}' id='${img.id}'>
+										</#list>
+                                    </div>
+                                </form>
+
+
+                                    <div class="control-group">
+										<br/>
+										<label for="artist_images">图集：</label>
+
+										<br/>
+										<!-- PAGE CONTENT BEGINS -->
+
+										<div class="alert alert-info">
+											<i class="icon-hand-right"></i>
+											tips：第一张默认作为封面图展示
+											<button class="close" data-dismiss="alert">
+												<i class="icon-remove"></i>
+											</button>
+										</div>
+
+										<div class="file-loading">
+										    <input id="artist_images" name="fileName" type="file" multiple>
+										</div>
+										
+											
+									</div>
+
+
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-info" type="button" id="artist_form_sub">
+												<i class="icon-ok bigger-110"></i>
+												Submit
+											</button>
+											&nbsp; &nbsp; &nbsp;
+											<button class="btn" type="reset">
+												<i class="icon-undo bigger-110"></i>
+												Reset
+											</button>
+										</div>
+									</div>
+
+									
+						
+
+							</div><!-- /.col -->
+
+
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+				<div class="ace-settings-container" id="ace-settings-container">
+					<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+						<i class="icon-cog bigger-150"></i>
+					</div>
+
+				</div><!-- /#ace-settings-container -->
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+        <!-- inline scripts related to this page -->
+		<script src="/static/bootstrap-fileinput/js/fileinput.min.js"></script>
+		<script src="/static/bootstrap-fileinput/js/locales/zh.js"></script>
+
+		<script type="text/javascript">
+			jQuery(function($) {
+			    $('#id-disable-check').on('click', function() {
+					var inp = $('#form-input-readonly').get(0);
+					if(inp.hasAttribute('disabled')) {
+						inp.setAttribute('readonly' , 'true');
+						inp.removeAttribute('disabled');
+						inp.value="This text field is readonly!";
+					}
+					else {
+						inp.setAttribute('disabled' , 'disabled');
+						inp.removeAttribute('readonly');
+						inp.value="This text field is disabled!";
+					}
+				});
+			
+			
+				$(".chosen-select").chosen(); 
+				$('#chosen-multiple-style').on('click', function(e){
+					var target = $(e.target).find('input[type=radio]');
+					var which = parseInt(target.val());
+					if(which == 2) $('#form-field-select-4').addClass('tag-input-style');
+					 else $('#form-field-select-4').removeClass('tag-input-style');
+				});
+			
+				$('textarea[class*=autosize]').autosize({append: "\n"});
+				$('textarea.limited').inputlimiter({
+					remText: '%n character%s remaining...',
+					limitText: 'max allowed : %n.'
+				});
+
+				
+				
+                
+
+                //上传提交相关。
+				$("#artist_images").fileinput({
+                    showCaption: false,
+                    uploadUrl: "/common/batchUpload",
+                    uploadAsync: false,//是否为异步上传
+                    minFileCount: 1,
+                    maxFileCount: 10,
+                    maxFileSize: 1024*5,//单位为kb，如果为0表示不限制文件大小
+                    showUpload: false, // 隐藏下方上传按钮
+                    showRemove: false, // 隐藏下方移除按钮
+
+                    overwriteInitial: false,
+                   initialPreview: [
+                    <#list imgList as img>
+          				"<img class='file-preview-image kv-preview-data' src='${img.url}'/>",
+					</#list>
+                   ],
+                    initialPreviewConfig: [
+                    	<#list imgList as img>
+                    		{caption: "Food-1.jpg", size: 329892, url: "/op/artist/delete/img", key: "${img.id}" },
+                    	</#list>
+                    ]
+
+
+				}).on("filebatchuploadsuccess", function(event, data, previewId, index) {
+                    var resp = data.response;
+                    if( resp.code==1001 && resp.data!=null ){
+                        resp.data.forEach(function(e){
+                            console.log(e);
+                            $("#artist_images_div").append("<input type='hidden'  name='images' value='"+e.url+"' id='"+e.id+"'>");
+                        });
+                        console.log("upload succ form submit");
+                        $("#artist_form").submit();
+                    }else{
+                        console.log("upload img callback error!")
+                    }
+                })
+
+				//删除回调，需要ajax提交后才回调
+				//$("#artist_images").on('filesuccessremove', function(event, id) {});
+				
+				//删除操作前回调
+                //$('#artist_images').on('filepredelete', function(event, id) {});
+
+                //删除操作后回调
+                $('#artist_images').on('filedeleted', function(event, id) {
+                	console.log("remove ele is :"+id)
+                    $("#"+id).remove();
+                });
+
+                //先上传图片 上传回调的时候提交表单
+                var isSub = false;
+				$("#artist_form_sub").click(function(){
+                    if( !isSub ){
+                        isSub = true;
+                        $("#artist_images").fileinput("upload");
+                    }
+                });
+			});
+		</script>
+</body>
+</html>

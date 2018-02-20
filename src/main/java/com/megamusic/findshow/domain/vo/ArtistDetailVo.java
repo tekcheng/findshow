@@ -11,6 +11,7 @@ public class ArtistDetailVo {
     private String id;
     private String name;
     private String description;
+    private String cateId;
     private List<String> images;//图集
     private List<String> videoInfo; //视频信息
 }

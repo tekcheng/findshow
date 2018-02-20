@@ -24,8 +24,8 @@ public class Artist {
     private String cover; //封面图
     @Column(length = 2048)
     private String images;//图集
-    @Column
-    private ArtistTypeEnum type;
+    @Column(nullable = false,columnDefinition="tinyint default 0")
+    private ArtistTypeEnum type=ArtistTypeEnum.ARTIST;
     @Column(nullable = false,columnDefinition="tinyint default 1")
     private boolean schedule = true;//是否有档期
     @Column(nullable = false,columnDefinition="tinyint default 0")
