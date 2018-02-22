@@ -4,6 +4,7 @@ import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -17,12 +18,13 @@ import java.util.Date;
 @Component
 public class AliyunOssUtils {
 
-    private static String endpoint = "oss-cn-beijing.aliyuncs.com";
-    private static String accessKeyId = "LTAIO3aygVkKcnaJ";
-    private static String accessKeySecret = "WWHvsi72TKvBlhyznQkVBCyj3DZr0J";
+
+    private static String endpoint;
+    private static String accessKeyId;
+    private static String accessKeySecret;
     private static String bucketName = "findshow";
     // 文件访问域名
-    private static String fileHost  = "http://findshow.oss-cn-beijing.aliyuncs.com/";
+    private static String fileHost;
 
 
 
@@ -67,4 +69,22 @@ public class AliyunOssUtils {
         ossClient.deleteObject(bucketName, key);
     }
 
+
+
+    @Value("${endpoint}")
+    public void setEndpoint(String endpoint) {
+        this.endpoint = endpoint;
+    }
+    @Value("${accessKeyId}")
+    public void setAccessKeyId(String accessKeyId) {
+        this.accessKeyId = accessKeyId;
+    }
+    @Value("${accessKeySecret}")
+    public void setAccessKeySecret(String accessKeySecret) {
+        this.accessKeySecret = accessKeySecret;
+    }
+    @Value("${fileHost}")
+    public void setFileHost(String fileHost) {
+        this.fileHost = fileHost;
+    }
 }
