@@ -3,10 +3,12 @@ package com.megamusic.findshow.controller.op;
 import com.aliyun.oss.ClientException;
 import com.megamusic.findshow.common.constant.SystemConstantsEnum;
 import com.megamusic.findshow.common.utils.AliyunOssUtils;
+import com.megamusic.findshow.common.utils.AliyunVideoUtils;
 import com.megamusic.findshow.common.utils.CommonUtils;
 import com.megamusic.findshow.common.utils.ResponseUtils;
 import com.megamusic.findshow.domain.Response;
 import com.megamusic.findshow.domain.op.ImageVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +32,15 @@ import java.util.List;
 @Controller
 @RequestMapping("/common")
 public class CommonController {
+
+    @Autowired
+    private AliyunVideoUtils aliyunVideoUtils;
+
+    @RequestMapping("getVideoUrl")
+    @ResponseBody
+    public Response getVideoUrl(String videoId) throws ClientException {
+        return ResponseUtils.getSuccessResponse(aliyunVideoUtils.getAliyunVideo(videoId));
+    }
 
     @RequestMapping("upload/page")
     public String upload() throws ClientException {

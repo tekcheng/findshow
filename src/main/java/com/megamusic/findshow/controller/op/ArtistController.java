@@ -12,6 +12,7 @@ import com.megamusic.findshow.domain.op.OpArtistVo;
 import com.megamusic.findshow.domain.vo.CategoryVo;
 import com.megamusic.findshow.service.ArtistService;
 import com.megamusic.findshow.service.CategoryService;
+import com.megamusic.findshow.service.op.OpArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,7 @@ import java.util.List;
 public class ArtistController {
 
     @Autowired
-    private ArtistService artistService;
+    private OpArtistService artistService;
 
     @Autowired
     private CategoryService categoryService;
@@ -104,12 +105,13 @@ public class ArtistController {
      * @return
      */
     @RequestMapping(value = "addDo", method = { RequestMethod.POST })
-    public String addDo(@RequestParam(name = "artist_name") String name,
+    @ResponseBody
+    public Response addDo(@RequestParam(name = "artist_name") String name,
                           @RequestParam(name = "artist_desc") String desc,
                           @RequestParam(name = "artist_cate") String cateId,
                           @RequestParam(name = "artist_sort") String sort,
                           @RequestParam(name = "artist_video") String videos,
-                          @RequestParam List<String> images ){
+                          @RequestParam(name = "images[]") List<String> images ){
 
         Artist artist = new Artist();
         artist.setName(name);
@@ -127,18 +129,23 @@ public class ArtistController {
 
         if( !CollectionUtils.isEmpty(images) ){
             artist.setCover(images.get(0));
-            StringBuffer imgSb = new StringBuffer();
-            for( int i=0;i<images.size();i++ ){
-                imgSb.append(images.get(i));
-                if(i!=images.size()-1){
-                    imgSb.append(",");
+            //第一张头像，后面的是图集
+            if( images.size()>1 ){
+                StringBuffer imgSb = new StringBuffer();
+                for( int i=1;i<images.size();i++ ){
+                    imgSb.append(images.get(i));
+                    if(i!=images.size()-1){
+                        imgSb.append(",");
+                    }
                 }
+                artist.setImages(imgSb.toString());
             }
-            artist.setImages(imgSb.toString());
+
         }
         artistRepository.save(artist);
 
-        return "redirect:/op/artist/list";
+        //return "redirect:/op/artist/list";
+        return ResponseUtils.getSuccessResponse("success");
     }
 
 
@@ -227,7 +234,7 @@ public class ArtistController {
     }
 
     /**
-     * 删除回调（前端使用）
+     * 删除
      * @return
      */
     @RequestMapping("delete")

@@ -59,7 +59,7 @@
 								    <div class="control-group">
 								    	<br/>
 							          <!-- Textarea -->
-							          <label class="control-label" for="artist_desc">简介：</label>
+							          <label class="control-label" for="artist_desc">简介(作品&场地信息)：</label>
 							          <div class="controls">
 							            <div class="textarea">
 							                  <textarea lass="form-control" id="artist_desc" cols="80" rows="10" name="artist_desc"> </textarea>
@@ -98,6 +98,19 @@
 								          </div>
 								    </div>
 
+
+									<div class="control-group">
+										<br/>
+										<!-- Text input-->
+										<label class="control-label" for="artist_video">艺人资讯 ：</label>
+										<div class="controls">
+											标题：<input type="text" placeholder="" class="input-xlarge" id="artist_news_title" name="artist_news_title">
+											连接：<input type="text" placeholder="" class="input-xlarge" id="artist_news_url" name="artist_news_url">
+											&nbsp; &nbsp; <button class="btn btn-xs" type="button">Mini</button>
+										</div>
+									</div>
+
+
                                     <div id="artist_images_div">
 
                                     </div>
@@ -113,7 +126,7 @@
 
 										<div class="alert alert-info">
 											<i class="icon-hand-right"></i>
-											tips：第一张默认作为封面图展示
+											tips：第一张默认作为头像，注意上传顺序。
 											<button class="close" data-dismiss="alert">
 												<i class="icon-remove"></i>
 											</button>
@@ -219,7 +232,8 @@
                         $("#artist_images_div").append("<input type='hidden'  name='images' value='"+e.url+"' id='"+e.id+"'>");
                     });
                     console.log("upload succ  form submit");
-                    $("#artist_form").submit();
+                    //$("#artist_form").submit();
+                    submitData();
                 }else{
                     console.log("upload img callback error!")
                 }
@@ -235,7 +249,49 @@
                     }
                 });
 			
-				
+
+
+				//页面提交
+				function submitData() {
+					//获取数据
+					var artist_name = $("#artist_name").val();
+					var artist_desc = $("#artist_desc").val();
+					var artist_cate = $("#artist_cate").val();
+					var artist_sort = $("#artist_sort").val();
+					var artist_video = $("#artist_video").val();
+                    var images = [];
+					$("#artist_images_div input[type=hidden]").each(function () {
+						images.push(this.value);
+                    });
+
+					var data = {
+                        artist_name:artist_name,
+						artist_desc:artist_desc,
+                        artist_cate:artist_cate,
+                        artist_sort:artist_sort,
+                        artist_video:artist_video,
+                        images:images
+					}
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "/op/artist/addDo",
+                        dataType : "json",
+                        data: data,
+                        success: function(data){
+                            if( data.code==1001){
+                                alert("添加成功");
+                            }else{
+                                alert("添加失败");
+                            }
+                            //window.location.reload();
+                        }
+                    });
+
+                }
+
+
+
 	
 			});
 

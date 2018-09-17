@@ -18,10 +18,16 @@ public class Artist {
     private Long id;
     @Column
     private String name;
-    @Column(columnDefinition = "TEXT")
-    private String description;
     @Column
-    private String cover; //封面图
+    private String age;
+    @Column(columnDefinition = "TEXT")
+    private String description; //类型为艺人是 是 作品信息
+    @Column
+    private String popularity; //人气
+    @Column
+    private String price;//参考价
+    @Column
+    private String cover; //封面图(头像)
     @Column(length = 2048)
     private String images;//图集
     @Column(nullable = false,columnDefinition="tinyint default 0")
@@ -30,17 +36,18 @@ public class Artist {
     private boolean schedule = true;//是否有档期
     @Column(nullable = false,columnDefinition="tinyint default 0")
     private Integer status=0; //状态 0 正常 1 下线
-    @Column
-    private Long created;
-    @Column
-    private Long updated;
     @Column(nullable = false,columnDefinition="tinyint default 0")
     private Integer isDeleted=0;//0正常 1删除
     @Column
     private Long categoryId; //所属分类
     @Column
+    private Integer cityId=1; //所属城市 默认 1 北京
+    @Column
     private Integer sort=0; //分类下权重
     @Column
     private String videoInfo; //视频信息
-
+    @Column
+    private Long created;
+    @Column
+    private Long updated;
 }

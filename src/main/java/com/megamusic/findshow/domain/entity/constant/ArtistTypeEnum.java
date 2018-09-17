@@ -16,4 +16,11 @@ public enum  ArtistTypeEnum {
         this.name = name;
     }
 
+    public Integer getCode() {
+        return code;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

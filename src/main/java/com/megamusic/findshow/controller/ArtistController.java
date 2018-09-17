@@ -1,13 +1,11 @@
 package com.megamusic.findshow.controller;
 
-import com.megamusic.findshow.common.constant.ResourceConstant;
 import com.megamusic.findshow.common.constant.SystemConstantsEnum;
 import com.megamusic.findshow.common.utils.ResponseUtils;
 import com.megamusic.findshow.domain.Response;
 import com.megamusic.findshow.domain.vo.ArtistDetailVo;
 import com.megamusic.findshow.domain.vo.ArtistVo;
 import com.megamusic.findshow.domain.vo.DataCollectionVo;
-import com.megamusic.findshow.domain.vo.ResourceVo;
 import com.megamusic.findshow.service.ArtistService;
 import com.megamusic.findshow.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;

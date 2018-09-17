@@ -21,5 +21,6 @@ src/test/resources/conf_path.properties
 target
 .module-cache
 .sass-cache
+application.properties
 
 **/workspace.xml

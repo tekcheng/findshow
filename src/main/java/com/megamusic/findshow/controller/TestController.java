@@ -1,6 +1,5 @@
 package com.megamusic.findshow.controller;
 
-import com.aliyuncs.exceptions.ClientException;
 import com.megamusic.findshow.service.ArtistService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,10 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.io.*;
-
-import static com.megamusic.findshow.common.utils.AliyunSmsUtils.sendSms;
 
 
 /**
@@ -54,8 +49,9 @@ public class TestController {
 
     @RequestMapping("send")
     @ResponseBody
-    public Object sendsms() throws ClientException {
-        return sendSms();
+    public Object sendsms() {
+        //return sendSms();
+        return "";
     }
 
 }
