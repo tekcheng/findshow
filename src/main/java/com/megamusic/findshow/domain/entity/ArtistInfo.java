@@ -36,6 +36,14 @@ public class ArtistInfo {
     private String weixin;//微信号
     @Column
     private String mobile;//手机号
+    @Column(columnDefinition = "TEXT")
+    private String artistNews;
+    @Column(columnDefinition = "TEXT")
+    private String artistExperience;
+    @Column
+    private Long created;
+    @Column
+    private Long updated;
 
 
 }

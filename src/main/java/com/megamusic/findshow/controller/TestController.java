@@ -1,5 +1,6 @@
 package com.megamusic.findshow.controller;
 
+import com.megamusic.findshow.common.utils.RedisUtil;
 import com.megamusic.findshow.service.ArtistService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,15 +20,9 @@ public class TestController {
 
     private static final Logger LOG = LoggerFactory.getLogger(TestController.class);
 
+
     @Autowired
     private ArtistService artistService;
-
-
-    @RequestMapping("get")
-    @ResponseBody
-    public Object findArtBYId(Long id){
-        return artistService.getArtistById(id);
-    }
 
     @RequestMapping("test")
     @ResponseBody
@@ -45,13 +40,20 @@ public class TestController {
         return mv;
     }
 
+    @Autowired
+    private RedisUtil redisUtil;
 
-
-    @RequestMapping("send")
+    @RequestMapping("setCache")
     @ResponseBody
-    public Object sendsms() {
-        //return sendSms();
+    public Object setCache() {
+        redisUtil.set("test1","123",30);
         return "";
+    }
+
+    @RequestMapping("getCache")
+    @ResponseBody
+    public Object getCache() {
+        return redisUtil.get("test1");
     }
 
 }

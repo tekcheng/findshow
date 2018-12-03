@@ -46,7 +46,9 @@ public class OpArtistService {
 
         List<Long> cids = new ArrayList<Long>();
         for( Artist artist:artistList ) {
-            cids.add(artist.getCategoryId());
+            if( artist.getCategoryId()!=null
+                    && !cids.contains(artist.getCategoryId()))
+                cids.add(artist.getCategoryId());
         }
 
         Map<Long,Category> categoryMap = batchGetCategory(cids);

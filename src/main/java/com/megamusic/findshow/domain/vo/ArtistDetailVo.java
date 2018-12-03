@@ -32,11 +32,15 @@ public class ArtistDetailVo {
     private String weight;//体重
     private String fans;//粉丝数
 
+    //联系方式是否可见
+    private boolean showContact;
+
     //以下信息付费可见
     private String weibo;//微博地址
     private String douyin;//抖音地址
     private String weixin;//微信号
     private String mobile;//手机号
+
 
     //相关报道
     private List<RelateNewsVo> news;

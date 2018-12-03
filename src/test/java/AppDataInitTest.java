@@ -75,7 +75,7 @@ public class AppDataInitTest {
     @Test
     public void addResourceContent(){
         ResContent resContentBanner1 = new ResContent();
-        resContentBanner1.setCategoryId(ResourceConstant.INDEX_BANNER_RESOURCE_ID);
+        resContentBanner1.setCategoryId(ResourceConstant.INDEX_BANNER_CATEGORY_ID);
         resContentBanner1.setContentType(ResContentTypeEnum.H5);
         resContentBanner1.setTitle("SCANDAL");
         resContentBanner1.setContent("http://music.163.com/#/artist?id=21324");
@@ -84,7 +84,7 @@ public class AppDataInitTest {
         resContentBanner1.setImage("http://p4.music.126.net/4PddpEZXtQ1XHVtP-Wo8fQ==/3396391422778665.jpg?param=640y300");
 
         ResContent resContentBanner2 = new ResContent();
-        resContentBanner2.setCategoryId(ResourceConstant.INDEX_BANNER_RESOURCE_ID);
+        resContentBanner2.setCategoryId(ResourceConstant.INDEX_BANNER_CATEGORY_ID);
         resContentBanner2.setContentType(ResContentTypeEnum.H5);
         resContentBanner2.setTitle("Vinnie Vincent Invasion");
         resContentBanner2.setContent("http://music.163.com/#/artist?id=83777");
@@ -93,7 +93,7 @@ public class AppDataInitTest {
         resContentBanner2.setImage("http://p4.music.126.net/F2Y3NkUf2486fgspymeeZg==/641015279005540.jpg?param=640y300");
 
         ResContent resContentBanner3 = new ResContent();
-        resContentBanner3.setCategoryId(ResourceConstant.INDEX_BANNER_RESOURCE_ID);
+        resContentBanner3.setCategoryId(ResourceConstant.INDEX_BANNER_CATEGORY_ID);
         resContentBanner3.setContentType(ResContentTypeEnum.H5);
         resContentBanner3.setTitle("The Stone Roses");
         resContentBanner3.setContent("http://music.163.com/#/artist?id=102012");

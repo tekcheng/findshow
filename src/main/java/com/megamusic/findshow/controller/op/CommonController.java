@@ -1,13 +1,13 @@
 package com.megamusic.findshow.controller.op;
 
 import com.aliyun.oss.ClientException;
+import com.aliyuncs.vod.model.v20170321.GetPlayInfoResponse;
 import com.megamusic.findshow.common.constant.SystemConstantsEnum;
-import com.megamusic.findshow.common.utils.AliyunOssUtils;
-import com.megamusic.findshow.common.utils.AliyunVideoUtils;
-import com.megamusic.findshow.common.utils.CommonUtils;
-import com.megamusic.findshow.common.utils.ResponseUtils;
+import com.megamusic.findshow.common.utils.*;
 import com.megamusic.findshow.domain.Response;
 import com.megamusic.findshow.domain.op.ImageVo;
+import com.megamusic.findshow.service.SmsService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +29,7 @@ import java.util.List;
 /**
  * Created by chengchao on 2018/2/13.
  */
+@Slf4j
 @Controller
 @RequestMapping("/common")
 public class CommonController {
@@ -36,10 +37,28 @@ public class CommonController {
     @Autowired
     private AliyunVideoUtils aliyunVideoUtils;
 
-    @RequestMapping("getVideoUrl")
+    @Autowired
+    private SmsService smsService;
+
+    @RequestMapping("sendSmsCode")
     @ResponseBody
-    public Response getVideoUrl(String videoId) throws ClientException {
+    public Response sendSmsCode(String phoneNo) throws ClientException {
+        smsService.sendVerifyCode(phoneNo);
+        return ResponseUtils.getSuccessResponse("success");
+    }
+
+
+    @RequestMapping("getVideoPlayAuth")
+    @ResponseBody
+    public Response getVideoPlayAuth(String videoId) throws ClientException {
         return ResponseUtils.getSuccessResponse(aliyunVideoUtils.getAliyunVideo(videoId));
+    }
+
+    @RequestMapping("getVideoPlayUrl")
+    @ResponseBody
+    public Response getVideoPlayUrl(String videoId) throws ClientException {
+        GetPlayInfoResponse getPlayInfoResponse = aliyunVideoUtils.getPlayInfo(videoId);
+        return ResponseUtils.getSuccessResponse(getPlayInfoResponse);
     }
 
     @RequestMapping("upload/page")
@@ -62,6 +81,7 @@ public class CommonController {
                 file.transferTo(newFile);
                 // 上传到阿里云
                 String fileUrl = AliyunOssUtils.upload(newFile);
+                newFile.delete();
                 return ResponseUtils.getSuccessResponse(fileUrl);
             }
         }
@@ -106,6 +126,7 @@ public class CommonController {
                     }
                 }
             }
+            log.info("[图片上传] 批量上传成功，返回地址：{}",files.toString());
             resp.setData(files);
             resp.setCode(SystemConstantsEnum.SUCCESS.getCode());
             resp.setMsg("success");

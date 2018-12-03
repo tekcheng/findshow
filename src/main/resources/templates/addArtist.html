@@ -47,6 +47,10 @@
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
 
+
+                                <h4>基本信息：</h4>
+
+
 								<form class="form-horizontal" role="form" id="artist_form" action="/op/artist/addDo" method="post" enctype="multipart/form-data">
 									<div class="control-group">
 								          <!-- Text input-->
@@ -56,39 +60,177 @@
 								          </div>
 								    </div>
 
-								    <div class="control-group">
-								    	<br/>
-							          <!-- Textarea -->
-							          <label class="control-label" for="artist_desc">简介(作品&场地信息)：</label>
-							          <div class="controls">
-							            <div class="textarea">
-							                  <textarea lass="form-control" id="artist_desc" cols="80" rows="10" name="artist_desc"> </textarea>
-							            </div>
-							          </div>
-							        </div>
-									
-									<div class="control-group">
-										<br/>
-										<label for="artist_cate">分类：</label>
+                                    <div class="control-group">
+                                        <br/>
+                                        <label for="artist_city">地区：</label>
+                                        <br/>
+                                        <select class="width-20 chosen-select" id="artist_city" name="artist_city" data-placeholder="Choose a Country...">
+                                            <option value="1">北京</option>
+                                            <option value="2">天津</option>
+                                        </select>
+                                    </div>
 
-										<br/>
-										<select class="width-20 chosen-select" id="artist_cate" name="artist_cate" data-placeholder="Choose a Country...">
-                                            <option value="">选择分类</option>
+
+                                    <div class="control-group">
+                                        <br/>
+                                        <label for="artist_cate">分类：</label>
+
+                                        <br/>
+                                        <select class="width-20 chosen-select" id="artist_cate" name="artist_cate" data-placeholder="Choose a Country...">
                                             <#list cateList as _cl>
                                                 <option value="${_cl.id}">${_cl.name}</option>
                                             </#list>
-										</select>
-									</div>
+                                        </select>
+                                    </div>
 
-									<div class="control-group">
-										<br/>
-								          <!-- Text input-->
-								          <label class="control-label" for="artist_sort">权重 ：</label>
-								          <div class="controls">
-								            <input type="text" placeholder="填写0-999数字" class="input-xsmall" id="artist_sort" name="artist_sort">
-								          </div>
-								    </div>
-									
+                                    <div class="control-group">
+                                        <br/>
+                                        <!-- Text input-->
+                                        <label class="control-label" for="artist_sort">权重 ：</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="填写0-999数字" class="input-xsmall" id="artist_sort" name="artist_sort">
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <!-- Text input-->
+                                        <label class="control-label" for="artist_age">年龄 ：</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="input-xlarge" id="artist_age" name="artist_age">
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <!-- Text input-->
+                                        <label class="control-label" for="artist_price">参考价位 ：</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="input-xlarge" id="artist_price" name="artist_price">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="control-group">
+                                        <!-- Text input-->
+                                        <label class="control-label" for="artist_popularity">人气 ：</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="input-xlarge" id="artist_popularity" name="artist_popularity">
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <!-- Text input-->
+                                        <label class="control-label" for="artist_weibo">微博 ：</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="input-xlarge" id="artist_weibo" name="artist_weibo">
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <!-- Text input-->
+                                        <label class="control-label" for="artist_weixin">微信 ：</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="input-xlarge" id="artist_weixin" name="artist_weixin">
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <!-- Text input-->
+                                        <label class="control-label" for="artist_douyin">抖音 ：</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="input-xlarge" id="artist_douyin" name="artist_douyin">
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <!-- Text input-->
+                                        <label class="control-label" for="artist_mobile">手机 ：</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="input-xlarge" id="artist_mobile" name="artist_mobile">
+                                        </div>
+                                    </div>
+
+                                    <br/>
+                                        <h4>其他信息：</h4>
+                                    <br/>
+
+                                    <div class="control-group">
+                                        <!-- Text input-->
+                                        <label class="control-label" for="artist_major">专业 ：</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="input-xlarge" id="artist_major" name="artist_major">
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <!-- Text input-->
+                                        <label class="control-label" for="artist_style">风格 ：</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="input-xlarge" id="artist_style" name="artist_style">
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <!-- Text input-->
+                                        <label class="control-label" for="artist_height">身高 ：</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="input-xlarge" id="artist_height" name="artist_height">
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <!-- Text input-->
+                                        <label class="control-label" for="artist_weight">体重 ：</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="input-xlarge" id="artist_weight" name="artist_weight">
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <!-- Text input-->
+                                        <label class="control-label" for="artist_fans">粉丝数 ：</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="input-xlarge" id="artist_fans" name="artist_fans">
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <!-- Text input-->
+                                        <label class="control-label" for="artist_tipTag">展示标签 ：</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="input-xlarge" id="artist_tipTag" name="artist_tipTag">
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <!-- Text input-->
+                                        <label class="control-label" for="artist_shortDesc">一句话描述 ：</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="input-xlarge" id="artist_shortDesc" name="artist_shortDesc">
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <!-- Text input-->
+                                        <label class="control-label" for="artist_shortDesc2">实力作证 ：</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="input-xlarge" id="artist_shortDesc2" name="artist_shortDesc2">
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="control-group">
+                                        <br/>
+                                        <!-- Textarea -->
+                                        <label class="control-label" for="artist_desc">简介(作品&场地信息)：</label>
+                                        <div class="controls">
+                                            <div class="textarea">
+                                                <textarea lass="form-control" id="artist_desc" cols="80" rows="10" name="artist_desc"> </textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
 								    <div class="control-group">
 								    	<br/>
 								          <!-- Text input-->
@@ -98,15 +240,34 @@
 								          </div>
 								    </div>
 
+									<br/>
+									<!-- 艺人资讯-->
+									<label class="control-label" for="artist_news">艺人资讯 ：</label>  <button  id="add_artist_news" class="btn btn-xs btn-pink" type="button">添加</button>
+									<br/>
+									<div class="control-group" id="artist_news">
+                                        <br/>
+										<div class="artist_news_list">
+											标题：<input type="text" placeholder="" class="input-xlarge" name="artist_news_title">
+											连接：<input type="text" placeholder="" class="input-xlarge" name="artist_news_url">
+											&nbsp; &nbsp; <button class="btn btn-xs del_artist_news" type="button">删除</button>
+										</div>
+									</div>
 
-									<div class="control-group">
-										<br/>
-										<!-- Text input-->
-										<label class="control-label" for="artist_video">艺人资讯 ：</label>
-										<div class="controls">
-											标题：<input type="text" placeholder="" class="input-xlarge" id="artist_news_title" name="artist_news_title">
-											连接：<input type="text" placeholder="" class="input-xlarge" id="artist_news_url" name="artist_news_url">
-											&nbsp; &nbsp; <button class="btn btn-xs" type="button">Mini</button>
+									<br/>
+									<br/>
+
+									<!-- 演职经历-->
+									<label class="control-label" for="artist_experience">艺人演职经历 ：</label>  <button  id="add_artist_experience" class="btn btn-xs btn-pink" type="button">添加</button>
+									<br/>
+									<div class="control-group" id="artist_experience">
+                                        <br/>
+										<div class="artist_experience_list">
+											类型：<select class="width-20" id="artist_experience_type" name="artist_experience_type" data-placeholder="Choose a Country...">
+													<option value="1" selected = "selected">综艺</option>
+													<option value="2">活动</option>
+												</select>
+											内容：<input type="text" placeholder="" class="input-xlarge" name="artist_artist_experience_detail">
+											&nbsp; &nbsp; <button class="btn btn-xs del_artist_experience" type="button">删除</button>
 										</div>
 									</div>
 
@@ -114,7 +275,18 @@
                                     <div id="artist_images_div">
 
                                     </div>
+
+                                    <input type='hidden'  name='images' value='' id='artist_avatar_url'>
                                 </form>
+
+                                <div class="control-group">
+                                    <br/>
+                                    <label for="artist_avatar">头像：</label>
+                                    <br/>
+                                    <div class="file-loading">
+                                        <input id="artist_avatar" name="fileName" type="file">
+                                    </div>
+                                </div>
 
 
                                     <div class="control-group">
@@ -124,40 +296,40 @@
 										<br/>
 										<!-- PAGE CONTENT BEGINS -->
 
-										<div class="alert alert-info">
-											<i class="icon-hand-right"></i>
-											tips：第一张默认作为头像，注意上传顺序。
-											<button class="close" data-dismiss="alert">
-												<i class="icon-remove"></i>
-											</button>
-										</div>
+										<!--<div class="alert alert-info">-->
+											<!--<i class="icon-hand-right"></i>-->
+											<!--tips：第一张默认作为头像，注意上传顺序。-->
+											<!--<button class="close" data-dismiss="alert">-->
+												<!--<i class="icon-remove"></i>-->
+											<!--</button>-->
+										<!--</div>-->
 
 										<div class="file-loading">
 										    <input id="artist_images" name="fileName" type="file" multiple>
 										</div>
-										
-											
 									</div>
 
 
-									<div class="clearfix form-actions">
-										<div class="col-md-offset-3 col-md-9">
-											<button class="btn btn-info" type="button" id="artist_form_sub">
-												<i class="icon-ok bigger-110"></i>
-												Submit
-											</button>
-											&nbsp; &nbsp; &nbsp;
-											<button class="btn" type="reset">
-												<i class="icon-undo bigger-110"></i>
-												Reset
-											</button>
-										</div>
-									</div>
+                            <br/>
+                            <br/>
 
-									
-						
 
-							</div><!-- /.col -->
+
+                                <div class="clearfix form-actions">
+                                    <div class="col-md-offset-3 col-md-9">
+                                        <button class="btn btn-info" type="button" id="artist_form_sub">
+                                            <i class="icon-ok bigger-110"></i>
+                                            Submit
+                                        </button>
+                                        &nbsp; &nbsp; &nbsp;
+                                        <button class="btn" type="reset">
+                                            <i class="icon-undo bigger-110"></i>
+                                            Reset
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div><!-- /.col -->
 
 
 						</div><!-- /.row -->
@@ -225,20 +397,45 @@
                     showUpload: false, // 隐藏下方上传按钮
                     showRemove: false, // 隐藏下方移除按钮
 				}).on("filebatchuploadsuccess", function(event, data, previewId, index) {
-                var resp = data.response;
-                if( resp.code==1001 && resp.data!=null ){
-                    resp.data.forEach(function(e){
-                        console.log(e);
-                        $("#artist_images_div").append("<input type='hidden'  name='images' value='"+e.url+"' id='"+e.id+"'>");
-                    });
-                    console.log("upload succ  form submit");
-                    //$("#artist_form").submit();
-                    submitData();
-                }else{
-                    console.log("upload img callback error!")
-                }
+                    var resp = data.response;
+                    if( resp.code==1001 && resp.data!=null ){
+                        resp.data.forEach(function(e){
+                            console.log(e);
+                            $("#artist_images_div").append("<input type='hidden'  name='images' value='"+e.url+"' id='"+e.id+"'>");
+                        });
+                        console.log("upload succ  form submit");
+                        $("#artist_avatar").fileinput("upload");
 
+                    }else{
+                        console.log("upload img callback error!")
+                    }
                 });
+
+
+                //上传头像
+                //自动上传 .on("filebatchselected",function (event, files) {
+                $("#artist_avatar").fileinput({
+                    showCaption: false,
+                    uploadUrl: "/common/upload",
+                    uploadAsync: false,//是否为异步上传
+                    minFileCount: 1,
+                    maxFileCount: 1,
+                    maxFileSize: 1024*5,//单位为kb，如果为0表示不限制文件大小
+                    showUpload: false, // 隐藏下方上传按钮
+                    showRemove: false, // 隐藏下方移除按钮
+                    overwriteInitial: true,
+                }).on("filebatchuploadsuccess", function(event, data, previewId, index) {
+                    var resp = data.response;
+                    if( resp.code==1001 && resp.data!=null ){
+                        console.log("upload avatar succ  form submit ");
+                        console.log(resp);
+                        $("#artist_avatar_url").attr("value", resp.data);
+                        submitData();
+                    }else{
+                        console.log("upload img callback error!")
+                    }
+                });
+
 
                 //先上传图片 上传回调的时候提交表单
                 var isSub = false;
@@ -248,36 +445,112 @@
                         $("#artist_images").fileinput("upload");
                     }
                 });
-			
+
+
 
 
 				//页面提交
 				function submitData() {
 					//获取数据
-					var artist_name = $("#artist_name").val();
-					var artist_desc = $("#artist_desc").val();
-					var artist_cate = $("#artist_cate").val();
-					var artist_sort = $("#artist_sort").val();
-					var artist_video = $("#artist_video").val();
+					var artist_name = $("#artist_name").val();  //名称
+                    var artist_city = $("#artist_city").val(); //城市
+                    var artist_cate = $("#artist_cate").val();//分类
+                    var artist_sort = $("#artist_sort").val(); //权重
+                    var artist_age = $("#artist_age").val(); //年龄
+                    var artist_price = $("#artist_price").val(); //价位
+                    var artist_popularity = $("#artist_popularity").val(); //人气
+                    var artist_weibo = $("#artist_weibo").val(); //微博
+                    var artist_weixin = $("#artist_weixin").val(); //微信
+                    var artist_douyin = $("#artist_douyin").val(); //抖音
+                    var artist_mobile = $("#artist_mobile").val(); //手机
+
+                    var artist_major = $("#artist_major").val(); //专业
+                    var artist_style = $("#artist_style").val(); //风格
+                    var artist_height = $("#artist_height").val(); //身高
+                    var artist_weight = $("#artist_weight").val(); //体重
+                    var artist_fans = $("#artist_fans").val(); //粉丝数
+					var artist_desc = $("#artist_desc").val(); //作品简介
+
+                    var artist_tipTag = $("#artist_tipTag").val(); //展示标签
+                    var artist_shortDesc = $("#artist_shortDesc").val(); //一句话描述
+                    var artist_shortDesc2 = $("#artist_shortDesc2").val(); //实力作证
+
+                    var artist_avatar = $("#artist_avatar_url").val();//头像
+
+					var artist_video = $("#artist_video").val(); //视频
                     var images = [];
 					$("#artist_images_div input[type=hidden]").each(function () {
 						images.push(this.value);
+                    }); //图片
+
+                    //相关新闻
+                    var artist_news = [];
+                    $("#artist_news div[class=artist_news_list]").each(function () {
+                        var title = $(this).find("input[name=artist_news_title]").val();
+                        var url = $(this).find("input[name=artist_news_url]").val();
+                        var news = {
+                            "title":title,
+                            "linkUrl":url
+                        };
+                        artist_news.push(news);
                     });
 
+
+                    //演职经历
+                    var artist_experience = [];
+                    $("#artist_experience div[class=artist_experience_list]").each(function () {
+                        var type = $(this).find("select[name=artist_experience_type]").val();
+                        var detail = $(this).find("input[name=artist_artist_experience_detail]").val();
+                        var experience = {
+                            "type":type,
+                            "detail":detail
+                        };
+                        artist_experience.push(experience);
+                    });
+
+
 					var data = {
-                        artist_name:artist_name,
-						artist_desc:artist_desc,
-                        artist_cate:artist_cate,
-                        artist_sort:artist_sort,
-                        artist_video:artist_video,
-                        images:images
-					}
+
+                        name:artist_name,
+                        cityId : artist_city,
+                        cateId:artist_cate,
+                        sort:artist_sort,
+                        age : artist_age,
+                        price:artist_price,
+                        popularity :artist_popularity,
+                        weibo : artist_weibo,
+                        weixin : artist_weixin,
+                        douyin : artist_douyin,
+                        mobile : artist_mobile,
+
+                        major : artist_major,
+                        style : artist_style,
+                        height : artist_height,
+                        weight : artist_weight,
+                        fans : artist_fans,
+
+                        tipTag:artist_tipTag,
+                        shortDesc:artist_shortDesc,
+                        shortDesc2:artist_shortDesc2,
+
+                        description:artist_desc,
+                        video:artist_video,
+                        images:images,
+                        news:artist_news,
+                        experience:artist_experience,
+
+                        avatar:artist_avatar
+
+					};
+
+					console.log(data);
 
                     $.ajax({
                         type: 'POST',
                         url: "/op/artist/addDo",
-                        dataType : "json",
-                        data: data,
+                        dataType: 'json',
+                        contentType: 'application/json;charset=UTF-8',
+                        data: JSON.stringify(data),
                         success: function(data){
                             if( data.code==1001){
                                 alert("添加成功");
@@ -292,7 +565,50 @@
 
 
 
-	
+                //添加艺人新闻
+                $(document).on( 'click','#add_artist_news',add_artist_news_view);
+                function add_artist_news_view() {
+                    $("#artist_news").append(html);
+                }
+                var html = [
+							'<div class="artist_news_list">',
+                    		'<br/>',
+							'标题：<input type="text" placeholder="" class="input-xlarge" name="artist_news_title">',
+							'连接：<input type="text" placeholder="" class="input-xlarge" name="artist_news_url">',
+							'&nbsp; &nbsp; <button class="btn btn-xs del_artist_news" type="button">删除</button>',
+							'</div>'
+                        ].join("")
+
+				//删除艺人新闻
+				$(document).on('click',".del_artist_news",function () {
+                    $(this).parent().remove();
+                });
+
+
+
+
+                //添加艺人演职经历
+                $(document).on( 'click','#add_artist_experience',add_artist_experience_view);
+                function add_artist_experience_view() {
+                    $("#artist_experience").append(html2);
+                }
+                var html2 = [
+                    '<div class="artist_experience_list">',
+                    '<br/>',
+                    '类型：<select class="width-20" name="artist_experience_type" data-placeholder="Choose a Country...">',
+                    '<option value="1" selected = "selected">综艺</option>',
+                    '<option value="2">活动</option>',
+                    '</select>',
+                    '内容：<input type="text" placeholder="" class="input-xlarge" name="artist_artist_experience_detail">',
+                    '&nbsp; &nbsp; <button class="btn btn-xs del_artist_experience" type="button">删除</button>',
+                    '</div>'
+                ].join("")
+
+                //删除艺人演职经历
+                $(document).on('click',".del_artist_experience",function () {
+                    $(this).parent().remove();
+                })
+
 			});
 
 

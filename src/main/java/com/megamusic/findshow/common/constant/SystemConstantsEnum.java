@@ -6,6 +6,7 @@ package com.megamusic.findshow.common.constant;
 public enum SystemConstantsEnum {
     SUCCESS(1001, "success", "成功"),
     PARAM_ERROR(1002, "param_error", "参数异常"),
+    VERIFY_CODE_WRONG(1003, "check_verify_code_wrong", "验证码错误"),
     FAIL(4004, "fail", "失败"),
     CALL_REMOTE_FAIL(4005, "call_remote_fail", "调用远程服务失败");
 

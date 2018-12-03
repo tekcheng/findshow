@@ -23,7 +23,7 @@ public class AliyunSmsUtils {
     //产品域名,开发者无需替换
     private static final String domain = "dysmsapi.aliyuncs.com";
 
-    public static SendSmsResponse sendSms() throws ClientException {
+    public static SendSmsResponse sendSms(String code,String phoneNo) throws ClientException {
         try {
             //可自助调整超时时间
             System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
@@ -37,13 +37,14 @@ public class AliyunSmsUtils {
             //组装请求对象-具体描述见控制台-文档部分内容
             SendSmsRequest request = new SendSmsRequest();
             //必填:待发送手机号
-            request.setPhoneNumbers("13920390935");
+            request.setPhoneNumbers(phoneNo);
             //必填:短信签名-可在短信控制台中找到
-            request.setSignName("麦塔");
+            request.setSignName("找演出商演平台");
             //必填:短信模板-可在短信控制台中找到
-            request.setTemplateCode("SMS_91875009");
+            request.setTemplateCode("SMS_151830445");
             //可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
-            request.setTemplateParam("{\"code\":\"12345\"}");
+            String tp = "{\"code\":\""+code+"\"}";
+            request.setTemplateParam(tp);
 
             //选填-上行短信扩展码(无特殊需求用户请忽略此字段)
             //request.setSmsUpExtendCode("90997");

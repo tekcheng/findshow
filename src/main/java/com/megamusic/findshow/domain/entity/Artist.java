@@ -4,6 +4,7 @@ import com.megamusic.findshow.domain.entity.constant.ArtistTypeEnum;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 /**
  * Created by maita on 17/8/14.
@@ -24,8 +25,19 @@ public class Artist {
     private String description; //类型为艺人是 是 作品信息
     @Column
     private String popularity; //人气
+
     @Column
-    private String price;//参考价
+    private String tipTag; //展示标签
+
+    @Column
+    private String shortDesc; //一句话描述
+    @Column
+    private String shortDesc2; //实力作证
+
+    @Column
+    private String price;//参考价（展示用）
+    @Column
+    private BigDecimal contactPrice;//查看联系方式价钱
     @Column
     private String cover; //封面图(头像)
     @Column(length = 2048)

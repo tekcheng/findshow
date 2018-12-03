@@ -37,7 +37,7 @@ public class ResourceController {
     @ResponseBody
     public Response index(){
         //获取banner
-        List<ResourceVo> resourceVoList = resourceService.getResContentById(ResourceConstant.INDEX_BANNER_RESOURCE_ID,0,10);
+        List<ResourceVo> resourceVoList = resourceService.getResContentById(ResourceConstant.INDEX_BANNER_CATEGORY_ID,0,10);
         //获取分类信息
         List<CategoryVo> categoryVoList = categoryService.getAllCategory();
 
@@ -50,7 +50,7 @@ public class ResourceController {
     @RequestMapping("index/banner")
     @ResponseBody
     public Response indexBanner(){
-        List<ResourceVo> result = resourceService.getResContentById(ResourceConstant.INDEX_BANNER_RESOURCE_ID,0,10);
+        List<ResourceVo> result = resourceService.getResContentById(ResourceConstant.INDEX_BANNER_CATEGORY_ID,0,10);
         DataCollectionVo<ResourceVo> dataCollectionVo = new DataCollectionVo<ResourceVo>();
         dataCollectionVo.setList(result);
         return ResponseUtils.getSuccessResponse(dataCollectionVo);
@@ -61,7 +61,7 @@ public class ResourceController {
     public Response indexRecdata(@RequestParam(defaultValue = "0") String fpage){
         Integer pageNum = Integer.valueOf(fpage);
         Integer pageSize = 10;
-        List<ResourceVo> result = resourceService.getResContentById(ResourceConstant.INDEX_RECOMMEND_DATA_RESCOURE_ID,pageNum,pageSize);
+        List<ResourceVo> result = resourceService.getResContentById(ResourceConstant.INDEX_RECOMMEND_ARTIST_CATEGORY_ID,pageNum,pageSize);
         DataCollectionVo<ResourceVo> dataCollectionVo = new DataCollectionVo<ResourceVo>();
         dataCollectionVo.setList(result);
         Integer nextPage = pageNum + 1;

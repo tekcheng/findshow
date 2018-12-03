@@ -1,16 +1,19 @@
 package com.megamusic.findshow.controller.op;
 
+import com.alibaba.fastjson.JSON;
 import com.megamusic.findshow.common.constant.SystemConstantsEnum;
 import com.megamusic.findshow.common.utils.CommonUtils;
 import com.megamusic.findshow.common.utils.ResponseUtils;
+import com.megamusic.findshow.dao.ArtistInfoRepository;
 import com.megamusic.findshow.dao.ArtistRepository;
 import com.megamusic.findshow.domain.Response;
+import com.megamusic.findshow.domain.dto.OpArtistRequestDto;
 import com.megamusic.findshow.domain.entity.Artist;
+import com.megamusic.findshow.domain.entity.ArtistInfo;
 import com.megamusic.findshow.domain.entity.constant.ArtistTypeEnum;
 import com.megamusic.findshow.domain.op.ImageVo;
 import com.megamusic.findshow.domain.op.OpArtistVo;
 import com.megamusic.findshow.domain.vo.CategoryVo;
-import com.megamusic.findshow.service.ArtistService;
 import com.megamusic.findshow.service.CategoryService;
 import com.megamusic.findshow.service.op.OpArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,8 +44,8 @@ public class ArtistController {
     @Autowired
     private ArtistRepository artistRepository;
 
-
-
+    @Autowired
+    private ArtistInfoRepository artistInfoRepository;
 
 
     /**
@@ -96,54 +100,70 @@ public class ArtistController {
 
     /**
      * 保存艺人信息
-     * @param name
-     * @param desc
-     * @param cateId
-     * @param sort
-     * @param videos
-     * @param images
      * @return
      */
     @RequestMapping(value = "addDo", method = { RequestMethod.POST })
     @ResponseBody
-    public Response addDo(@RequestParam(name = "artist_name") String name,
-                          @RequestParam(name = "artist_desc") String desc,
-                          @RequestParam(name = "artist_cate") String cateId,
-                          @RequestParam(name = "artist_sort") String sort,
-                          @RequestParam(name = "artist_video") String videos,
-                          @RequestParam(name = "images[]") List<String> images ){
-
+    public Response addDo(@RequestBody OpArtistRequestDto opArtistRequestDto){
         Artist artist = new Artist();
-        artist.setName(name);
-        artist.setDescription(desc);
-        artist.setVideoInfo(videos);
+        artist.setName(opArtistRequestDto.getName());
+        artist.setDescription(opArtistRequestDto.getDescription());
+        artist.setVideoInfo(opArtistRequestDto.getVideo());
         artist.setCreated(System.currentTimeMillis());
         artist.setUpdated(System.currentTimeMillis());
         artist.setType(ArtistTypeEnum.ARTIST);
+        artist.setSort(opArtistRequestDto.getSort());
+        artist.setContactPrice(new BigDecimal(5)); // 此处默认查看联系方式价格为5.00元
+        artist.setShortDesc(opArtistRequestDto.getShortDesc());
+        artist.setShortDesc2(opArtistRequestDto.getShortDesc2());
+        artist.setTipTag(opArtistRequestDto.getTipTag());
 
-        if( !StringUtils.isEmpty(cateId) )
-            artist.setCategoryId(Long.valueOf(cateId));
+        if( !StringUtils.isEmpty(opArtistRequestDto.getCateId()) )
+            artist.setCategoryId(Long.valueOf(opArtistRequestDto.getCateId()));
 
-        if( !StringUtils.isEmpty(sort) )
-            artist.setSort(Integer.valueOf(sort));
-
-        if( !CollectionUtils.isEmpty(images) ){
-            artist.setCover(images.get(0));
-            //第一张头像，后面的是图集
-            if( images.size()>1 ){
+        artist.setCover(opArtistRequestDto.getAvatar());
+        if( !CollectionUtils.isEmpty(opArtistRequestDto.getImages()) ){
                 StringBuffer imgSb = new StringBuffer();
-                for( int i=1;i<images.size();i++ ){
-                    imgSb.append(images.get(i));
-                    if(i!=images.size()-1){
+                for(int i = 0; i< opArtistRequestDto.getImages().size(); i++ ){
+                    imgSb.append(opArtistRequestDto.getImages().get(i));
+                    if(i!= opArtistRequestDto.getImages().size()-1){
                         imgSb.append(",");
                     }
                 }
                 artist.setImages(imgSb.toString());
-            }
+
 
         }
+
+        artist.setAge(opArtistRequestDto.getAge());
+        artist.setCityId(Integer.valueOf(opArtistRequestDto.getCityId()));
+        artist.setPrice(opArtistRequestDto.getPrice());
+        artist.setPopularity(opArtistRequestDto.getPopularity());
         artistRepository.save(artist);
 
+
+        //艺人相关信息
+        ArtistInfo artistInfo = new ArtistInfo();
+        artistInfo.setArtistId(artist.getId());
+        artistInfo.setWeight(opArtistRequestDto.getWeight());
+        artistInfo.setHeight(opArtistRequestDto.getHeight());
+        artistInfo.setFans(opArtistRequestDto.getFans());
+        artistInfo.setMajor(opArtistRequestDto.getMajor());
+        artistInfo.setStyle(opArtistRequestDto.getStyle());
+
+        artistInfo.setWeixin(opArtistRequestDto.getWeixin());
+        artistInfo.setWeibo(opArtistRequestDto.getWeibo());
+        artistInfo.setMobile(opArtistRequestDto.getMobile());
+        artistInfo.setDouyin(opArtistRequestDto.getDouyin());
+
+        if(!CollectionUtils.isEmpty(opArtistRequestDto.getExperience()))
+            artistInfo.setArtistExperience(JSON.toJSON(opArtistRequestDto.getExperience()).toString());
+        if(!CollectionUtils.isEmpty(opArtistRequestDto.getNews()))
+            artistInfo.setArtistNews(JSON.toJSON(opArtistRequestDto.getNews()).toString());
+
+        artistInfo.setUpdated(System.currentTimeMillis());
+        artistInfo.setCreated(System.currentTimeMillis());
+        artistInfoRepository.save(artistInfo);
         //return "redirect:/op/artist/list";
         return ResponseUtils.getSuccessResponse("success");
     }
@@ -159,11 +179,20 @@ public class ArtistController {
         List<CategoryVo> categoryVoList = categoryService.getAllCategory();
 
         Artist artist = artistRepository.findOne(Long.valueOf(aid));
+        ArtistInfo artistInfo = artistInfoRepository.findByArtistId(Long.valueOf(aid));
 
         ModelAndView mv = new ModelAndView("editArtist");
         mv.addObject("submenu","editArtist");
         mv.addObject("cateList",categoryVoList);
         mv.addObject("artist",artist);
+        if( artistInfo!=null ){
+            mv.addObject("news",JSON.parseObject(artistInfo.getArtistNews(),List.class));
+            mv.addObject("experience",JSON.parseObject(artistInfo.getArtistExperience(),List.class));
+            mv.addObject("artistInfo",artistInfo);
+        } else {
+            mv.addObject("artistInfo",new ArtistInfo());
+        }
+
 
         List<ImageVo> imageVoList = new ArrayList<ImageVo>();
         if( artist!=null &&
@@ -183,44 +212,72 @@ public class ArtistController {
     }
 
     @RequestMapping(value = "editDo", method = { RequestMethod.POST })
-    public String editDo(@RequestParam(name = "artist_id") String id,
-                           @RequestParam(name = "artist_name") String name,
-                           @RequestParam(name = "artist_desc") String desc,
-                           @RequestParam(name = "artist_cate") String cateId,
-                           @RequestParam(name = "artist_sort") String sort,
-                           @RequestParam(name = "artist_video") String videos,
-                           @RequestParam List<String> images   ){
-        //TODO 错误处理
-        if(StringUtils.isEmpty(id))
-            return "redirect:/op/artist/list";
+    @ResponseBody
+    public Response editDo(@RequestBody OpArtistRequestDto opArtistRequestDto){
 
         //省事先查出来
-        Artist sourceArtist = artistRepository.findOne(Long.valueOf(id));
+        Artist sourceArtist = artistRepository.findOne(opArtistRequestDto.getId());
 
-        Artist artist = new Artist();
-        artist.setId(Long.valueOf(id));
-        artist.setName(name);
-        artist.setDescription(desc);
-        artist.setVideoInfo(videos);
-        if(!StringUtils.isEmpty(cateId))
-            artist.setCategoryId(Long.valueOf(cateId));
-        if(!StringUtils.isEmpty(sort))
-            artist.setSort(Integer.valueOf(sort));
-        if( !CollectionUtils.isEmpty(images) ){
-            artist.setCover(images.get(0));
-            StringBuffer imgSb = new StringBuffer();
-            for( int i=0;i<images.size();i++ ){
-                imgSb.append(images.get(i));
-                if(i!=images.size()-1){
-                    imgSb.append(",");
+        sourceArtist.setName(opArtistRequestDto.getName());
+        sourceArtist.setDescription(opArtistRequestDto.getDescription());
+        sourceArtist.setVideoInfo(opArtistRequestDto.getVideo());
+        if(!StringUtils.isEmpty(opArtistRequestDto.getCateId()))
+            sourceArtist.setCategoryId(Long.valueOf(opArtistRequestDto.getCateId()));
+        if(!StringUtils.isEmpty(opArtistRequestDto.getSort()))
+            sourceArtist.setSort(opArtistRequestDto.getSort());
+
+        sourceArtist.setCover(opArtistRequestDto.getAvatar());
+        if( !CollectionUtils.isEmpty(opArtistRequestDto.getImages()) ){
+            if( opArtistRequestDto.getImages().size()>0 ){
+                StringBuffer imgSb = new StringBuffer();
+                for(int i = 0; i< opArtistRequestDto.getImages().size(); i++ ){
+                    imgSb.append(opArtistRequestDto.getImages().get(i));
+                    if(i!= opArtistRequestDto.getImages().size()-1){
+                        imgSb.append(",");
+                    }
                 }
+                sourceArtist.setImages(imgSb.toString());
             }
-            artist.setImages(imgSb.toString());
+
         }
-        artist.setUpdated(System.currentTimeMillis());
-        artist.setCreated(sourceArtist.getCreated());
-        artistRepository.save(artist);
-        return "redirect:/op/artist/edit?aid="+id;
+        sourceArtist.setShortDesc(opArtistRequestDto.getShortDesc());
+        sourceArtist.setShortDesc2(opArtistRequestDto.getShortDesc2());
+        sourceArtist.setTipTag(opArtistRequestDto.getTipTag());
+        sourceArtist.setAge(opArtistRequestDto.getAge());
+        sourceArtist.setCityId(Integer.valueOf(opArtistRequestDto.getCityId()));
+        sourceArtist.setPrice(opArtistRequestDto.getPrice());
+        sourceArtist.setPopularity(opArtistRequestDto.getPopularity());
+        sourceArtist.setUpdated(System.currentTimeMillis());
+        artistRepository.save(sourceArtist);
+
+
+        //艺人相关信息 没有就新建
+        ArtistInfo artistInfo = artistInfoRepository.findByArtistId(sourceArtist.getId());
+        if( artistInfo==null ){
+            artistInfo = new ArtistInfo();
+            artistInfo.setArtistId(sourceArtist.getId());
+
+        }
+        artistInfo.setWeight(opArtistRequestDto.getWeight());
+        artistInfo.setHeight(opArtistRequestDto.getHeight());
+        artistInfo.setFans(opArtistRequestDto.getFans());
+        artistInfo.setMajor(opArtistRequestDto.getMajor());
+        artistInfo.setStyle(opArtistRequestDto.getStyle());
+
+        artistInfo.setWeixin(opArtistRequestDto.getWeixin());
+        artistInfo.setWeibo(opArtistRequestDto.getWeibo());
+        artistInfo.setMobile(opArtistRequestDto.getMobile());
+        artistInfo.setDouyin(opArtistRequestDto.getDouyin());
+
+        if(!CollectionUtils.isEmpty(opArtistRequestDto.getExperience()))
+            artistInfo.setArtistExperience(JSON.toJSON(opArtistRequestDto.getExperience()).toString());
+        if(!CollectionUtils.isEmpty(opArtistRequestDto.getNews()))
+            artistInfo.setArtistNews(JSON.toJSON(opArtistRequestDto.getNews()).toString());
+
+        artistInfo.setUpdated(System.currentTimeMillis());
+        artistInfoRepository.save(artistInfo);
+
+        return ResponseUtils.getSuccessResponse("success");
     }
 
     /**

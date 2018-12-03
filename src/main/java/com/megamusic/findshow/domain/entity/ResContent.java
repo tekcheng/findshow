@@ -16,11 +16,13 @@ public class ResContent {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     @Column
+    private Long cityId;
+    @Column
     private Long categoryId; //所属资源位id
     @Column
     private String title; //标题
     @Column
-    private String image;
+    private String image; //封面图
     @Column
     private String content;  //内容 类型为H5的时候 存页面地址
     @Column

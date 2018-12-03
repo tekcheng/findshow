@@ -57,10 +57,10 @@ public class ArtistController {
      */
     @RequestMapping("detail")
     @ResponseBody
-    public Response artistDetail(String aid){
+    public Response artistDetail(String aid,Long userId){
         if(StringUtils.isEmpty(aid))
             return ResponseUtils.getErrorResponse(SystemConstantsEnum.CALL_REMOTE_FAIL);
-        ArtistDetailVo artistDetailVo = artistService.getArtistDetail(Long.valueOf(aid));
+        ArtistDetailVo artistDetailVo = artistService.getArtistDetail(Long.valueOf(aid),userId);
         return ResponseUtils.getSuccessResponse(artistDetailVo);
     }
 

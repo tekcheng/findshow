@@ -1,17 +1,24 @@
 package com.megamusic.findshow.service;
 
-import com.megamusic.findshow.dao.*;
-import com.megamusic.findshow.domain.entity.*;
+import com.alibaba.fastjson.JSON;
+import com.megamusic.findshow.dao.ArtistInfoRepository;
+import com.megamusic.findshow.dao.ArtistRepository;
+import com.megamusic.findshow.dao.CategoryRepository;
+import com.megamusic.findshow.dao.OrderRepository;
+import com.megamusic.findshow.domain.entity.Artist;
+import com.megamusic.findshow.domain.entity.ArtistInfo;
+import com.megamusic.findshow.domain.entity.Category;
+import com.megamusic.findshow.domain.entity.Order;
 import com.megamusic.findshow.domain.entity.constant.CityEnum;
 import com.megamusic.findshow.domain.entity.constant.DeleteCodeEnum;
-import com.megamusic.findshow.domain.op.OpArtistVo;
+import com.megamusic.findshow.domain.entity.constant.PayStatus;
 import com.megamusic.findshow.domain.vo.ArtistDetailVo;
-import com.megamusic.findshow.domain.vo.ArtistExpVo;
 import com.megamusic.findshow.domain.vo.ArtistVo;
-import com.megamusic.findshow.domain.vo.RelateNewsVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -34,23 +41,7 @@ public class ArtistService {
     private ArtistInfoRepository artistInfoRepository;
 
     @Autowired
-    private ArtistExperienceRepository artistExperienceRepository;
-
-    @Autowired
-    private ArtistNewsRepository artistNewsRepository;
-
-    /**
-     * test
-     *
-     * @param id
-     * @return
-     */
-    public ArtistVo getArtistById(Long id) {
-        Artist artist = artistRepository.findOne(id);
-        ArtistVo artistVo = new ArtistVo();
-        BeanUtils.copyProperties(artist, artistVo);
-        return artistVo;
-    }
+    private OrderRepository orderRepository;
 
     public List<ArtistVo> getArtistByCateId(Long cateId, Integer pageNum, Integer pageSize) {
         if (pageSize == null) pageSize = 20;
@@ -113,7 +104,7 @@ public class ArtistService {
      * @param id
      * @return
      */
-    public ArtistDetailVo getArtistDetail(Long id) {
+    public ArtistDetailVo getArtistDetail(Long id, Long userId) {
         if (id == null || id < 0L)
             return null;
 
@@ -152,17 +143,14 @@ public class ArtistService {
         }
 
         //获取艺人资料信息
-        generateArtistDetailVo(artistDetailVo);
-
-        //获取艺人经历&新闻
-        generateArtistExpAndNews(artistDetailVo);
+        generateArtistDetailVo(artistDetailVo, id, userId);
 
         return artistDetailVo;
     }
 
     //获取艺人资料信息
-    private ArtistDetailVo generateArtistDetailVo(ArtistDetailVo artistDetailVo) {
-        ArtistInfo artistInfo = artistInfoRepository.findByArtistId(Long.valueOf(artistDetailVo.getId()));
+    private ArtistDetailVo generateArtistDetailVo(ArtistDetailVo artistDetailVo, Long artistId, Long userId) {
+        ArtistInfo artistInfo = artistInfoRepository.findByArtistId(artistId);
         if (artistInfo == null)
             return artistDetailVo;
 
@@ -172,39 +160,24 @@ public class ArtistService {
         artistDetailVo.setWeight(artistInfo.getWeight());
         artistDetailVo.setFans(artistInfo.getFans());
 
-        //TODO 是否可见
-        artistDetailVo.setWeibo(artistInfo.getWeibo());
-        artistDetailVo.setWeixin(artistInfo.getWeixin());
-        artistDetailVo.setDouyin(artistInfo.getDouyin());
-        artistDetailVo.setMobile(artistInfo.getMobile());
-
-        return artistDetailVo;
-    }
-
-    //获取经历和新闻
-    private ArtistDetailVo generateArtistExpAndNews(ArtistDetailVo artistDetailVo) {
-        List<ArtistExperience> artistExperienceList = artistExperienceRepository.findByArtistId(Long.valueOf(artistDetailVo.getId()));
-        List<ArtistNews> artistNewsList = artistNewsRepository.findByArtistId(Long.valueOf(artistDetailVo.getId()));
-        if (!CollectionUtils.isEmpty(artistExperienceList)) {
-            List<ArtistExpVo> artistExpVoList = new ArrayList<ArtistExpVo>();
-            for( ArtistExperience ae:artistExperienceList ){
-                ArtistExpVo artistExpVo = new ArtistExpVo();
-                artistExpVo.setDetail(ae.getDetail());
-                artistExpVo.setType(ae.getType().toString());
-                artistExpVoList.add(artistExpVo);
+        artistDetailVo.setShowContact(false);
+        //判断联系方式是否可见
+        if (userId != null) {
+            Order order = orderRepository.getByUserIdAndArtistIdAndPayStatus(userId, artistId, PayStatus.CALLBACK);
+            if(order!=null){
+                artistDetailVo.setShowContact(true);
+                artistDetailVo.setWeibo(artistInfo.getWeibo());
+                artistDetailVo.setWeixin(artistInfo.getWeixin());
+                artistDetailVo.setDouyin(artistInfo.getDouyin());
+                artistDetailVo.setMobile(artistInfo.getMobile());
             }
-            artistDetailVo.setExperience(artistExpVoList);
         }
-        if (!CollectionUtils.isEmpty(artistNewsList)) {
-            List<RelateNewsVo> relateNewsVoList = new ArrayList<RelateNewsVo>();
-            for( ArtistNews an:artistNewsList ){
-                RelateNewsVo relateNewsVo = new RelateNewsVo();
-                relateNewsVo.setTitle(an.getTitle());
-                relateNewsVo.setLinkUrl(an.getLinkUrl());
-                relateNewsVoList.add(relateNewsVo);
-            }
-            artistDetailVo.setNews(relateNewsVoList);
-        }
+
+
+        if (!StringUtils.isEmpty(artistInfo.getArtistExperience()))
+            artistDetailVo.setExperience(JSON.parseObject(artistInfo.getArtistExperience(), List.class));
+        if (!StringUtils.isEmpty(artistInfo.getArtistNews()))
+            artistDetailVo.setNews(JSON.parseObject(artistInfo.getArtistNews(), List.class));
         return artistDetailVo;
     }
 
