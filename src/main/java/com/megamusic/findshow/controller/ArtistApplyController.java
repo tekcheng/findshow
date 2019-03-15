@@ -59,7 +59,7 @@ public class ArtistApplyController {
         artistApplyInfo.setUpdated(System.currentTimeMillis());
         artistApplyInfo.setSimpleTag(artistApplyDto.getSimpleTag());
 
-        log.info("[添加申请]---===--- param:{}",artistApplyDto.toString());
+        log.info("[艺人入驻申请]--- param:{}",artistApplyDto.toString());
 
         artistApplyRepository.save(artistApplyInfo);
         return ResponseUtils.getSuccessResponse("success");

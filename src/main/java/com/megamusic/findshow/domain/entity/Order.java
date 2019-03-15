@@ -1,9 +1,5 @@
 package com.megamusic.findshow.domain.entity;
 
-import com.megamusic.findshow.domain.entity.constant.ArtistTypeEnum;
-import com.megamusic.findshow.domain.entity.constant.DeleteCodeEnum;
-import com.megamusic.findshow.domain.entity.constant.OrderType;
-import com.megamusic.findshow.domain.entity.constant.PayStatus;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -52,23 +48,91 @@ public class Order {
 
     //商品类型
     @Column(nullable = false,columnDefinition="tinyint default 0")
-    private ArtistTypeEnum artistType;
+    private Integer artistType;
 
     //订单类型
     @Column(nullable = false,columnDefinition="tinyint default 1")
-    private OrderType orderType;
+    private Integer orderType;
 
     //支付状态
     @Column(nullable = false,columnDefinition="tinyint default 0")
-    private PayStatus payStatus;
+    private Integer payStatus;
 
     //删除 1 删除
     @Column(nullable = false,columnDefinition="tinyint default 0")
-    private DeleteCodeEnum isDeleted;
+    private Integer isDeleted;
 
     @Column
     private Long created;
 
     @Column
     private Long updated;
+
+
+    public enum OrderType {
+        CONTACT(1,"查看联系方式"),RESERVE(2,"预定");
+
+        private Integer code;
+        private String name;
+
+        OrderType(Integer code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+        public Integer getCode() {
+            return code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public static OrderType getOrderTypeByCode(Integer code){
+            for( OrderType orderType:OrderType.values() ){
+                if(orderType.getCode().equals(code)){
+                    return orderType;
+                }
+            }
+            return null;
+        }
+    }
+
+
+    public enum PayStatus {
+        INIT(0,"初始化"),
+        AUDITING(1,"审核中"),
+        PASS(2,"审核通过待支付"),
+        REJECT(3,"审核拒绝-已关闭"),
+        PAY_SUCCESS(4,"支付成功-待确认"),
+        FAIL(5,"支付失败"),
+        CALLBACK(6,"回调成功"),
+        DONE(7,"已确认完成")
+        ;
+
+        private Integer code;
+        private String name;
+
+        PayStatus(Integer code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+        public Integer getCode() {
+            return code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public static PayStatus getPayStatusByCode(Integer code){
+            for( PayStatus payStatus:PayStatus.values() ){
+                if(payStatus.getCode().equals(code)){
+                    return payStatus;
+                }
+            }
+            return null;
+        }
+    }
 }

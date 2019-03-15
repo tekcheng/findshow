@@ -5,6 +5,7 @@ import com.megamusic.findshow.common.utils.HttpClientUtils;
 import com.megamusic.findshow.dao.UserRepository;
 import com.megamusic.findshow.domain.dto.UserDto;
 import com.megamusic.findshow.domain.entity.User;
+import com.vdurmont.emoji.EmojiParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -65,7 +66,7 @@ public class UserService {
 
         HashMap<String,String> userInfo = JSON.parseObject(getUserResult, HashMap.class);
         String avatar = userInfo.get("headimgurl");
-        String nickName  = userInfo.get("nickname");
+        String nickName  =  EmojiParser.parseToAliases(userInfo.get("nickname"));
         if(StringUtils.isEmpty(accessToken) || StringUtils.isEmpty(openId) ){
             log.error("[微信登录] 获取access_token失败，code:{} ，response:{}",code,wxResult);
             return null;
@@ -75,7 +76,7 @@ public class UserService {
         User user = userRepository.findByOpenid(openId);
         if(user!=null){
             userDto.setAvatar(user.getAvatar());
-            userDto.setNickName(user.getNickName());
+            userDto.setNickName(EmojiParser.parseToUnicode(user.getNickName()));
             userDto.setUserId(user.getId().toString());
             return userDto;
         }

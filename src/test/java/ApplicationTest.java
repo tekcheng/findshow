@@ -45,7 +45,7 @@ public class ApplicationTest {
             Artist artist = new Artist();
             String username = getRandomString(5);
             artist.setName(username);
-            artist.setType(ArtistTypeEnum.FIELD);
+            artist.setType(ArtistTypeEnum.FIELD.getCode());
             artist.setDescription(getRandomString(20));
             if( i%2==0 ){
                 artist.setSchedule(false);

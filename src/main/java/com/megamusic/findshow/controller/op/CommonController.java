@@ -91,6 +91,7 @@ public class CommonController {
     @RequestMapping(value = "/batchUpload", method = { RequestMethod.POST })
     @ResponseBody
     public Response<List<ImageVo>> batchUpload( HttpServletRequest request, HttpServletResponse response ) throws ClientException,IOException {
+        log.info("[图片上传] 批量上传调用开始");
         Response<List<ImageVo>> resp = new Response<List<ImageVo>>();
         try {
             // 创建一个通用的多部分解析器

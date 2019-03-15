@@ -9,8 +9,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Created by maita on 17/8/14.
  */
 public interface ArtistRepository extends JpaRepository<Artist,Long> {
-    Page<Artist> findByCategoryIdAndIsDeleted(Long cateId,Integer isDeleted,Pageable pageable);
+
     Artist findByIdAndIsDeleted(Long id,Integer isDeleted);
     Page<Artist> findByIsDeleted(Integer isDeleted,Pageable pageable);
+    Page<Artist> findByCategoryIdAndIsDeleted(Long cateId,Integer isDeleted,Pageable pageable);
+
+    Page<Artist> findByCityIdAndIsDeleted(Integer cityId,Integer isDeleted,Pageable pageable);
+    Page<Artist> findByCityIdAndCategoryIdAndIsDeleted(Integer cityId,Long cateId,Integer isDeleted,Pageable pageable);
+
 
 }

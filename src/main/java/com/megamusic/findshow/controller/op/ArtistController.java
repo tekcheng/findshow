@@ -111,7 +111,7 @@ public class ArtistController {
         artist.setVideoInfo(opArtistRequestDto.getVideo());
         artist.setCreated(System.currentTimeMillis());
         artist.setUpdated(System.currentTimeMillis());
-        artist.setType(ArtistTypeEnum.ARTIST);
+        artist.setType(ArtistTypeEnum.ARTIST.getCode());
         artist.setSort(opArtistRequestDto.getSort());
         artist.setContactPrice(new BigDecimal(5)); // 此处默认查看联系方式价格为5.00元
         artist.setShortDesc(opArtistRequestDto.getShortDesc());

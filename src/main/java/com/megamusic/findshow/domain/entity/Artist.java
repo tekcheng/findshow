@@ -43,7 +43,7 @@ public class Artist {
     @Column(length = 2048)
     private String images;//图集
     @Column(nullable = false,columnDefinition="tinyint default 0")
-    private ArtistTypeEnum type=ArtistTypeEnum.ARTIST;
+    private Integer type=ArtistTypeEnum.ARTIST.getCode();
     @Column(nullable = false,columnDefinition="tinyint default 1")
     private boolean schedule = true;//是否有档期
     @Column(nullable = false,columnDefinition="tinyint default 0")

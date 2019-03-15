@@ -15,6 +15,9 @@ public class ResCategory {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     @Column
+    private Integer type;//@see ResContentTypeEnum
+
+    @Column
     private String name;
     @Column
     private String description;

@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -52,7 +54,7 @@ public class AppDataInitTest {
             artist.setDescription("");
             artist.setCreated(System.currentTimeMillis());
             artist.setUpdated(System.currentTimeMillis());
-            artist.setType(ArtistTypeEnum.ARTIST);
+            artist.setType(ArtistTypeEnum.ARTIST.getCode());
             artistRepository.save(artist);
         }
     }
@@ -62,40 +64,60 @@ public class AppDataInitTest {
         ResCategory resCategory = new ResCategory();
         resCategory.setCreated(System.currentTimeMillis());
         resCategory.setUpdated(System.currentTimeMillis());
+        resCategory.setType(ResContentTypeEnum.LINK.getCode());
         resCategory.setName("首页banner");
         resCategoryRepository.save(resCategory);
 
         ResCategory resCategory1 = new ResCategory();
         resCategory1.setCreated(System.currentTimeMillis());
         resCategory1.setUpdated(System.currentTimeMillis());
-        resCategory1.setName("首页推荐数据");
+        resCategory1.setType(ResContentTypeEnum.ENTITY.getCode());
+        resCategory1.setName("首页每日推新");
         resCategoryRepository.save(resCategory1);
+
+        ResCategory resCategory2 = new ResCategory();
+        resCategory2.setCreated(System.currentTimeMillis());
+        resCategory2.setUpdated(System.currentTimeMillis());
+        resCategory2.setType(ResContentTypeEnum.ENTITY.getCode());
+        resCategory2.setName("首页推荐艺人");
+        resCategoryRepository.save(resCategory2);
+
+        ResCategory resCategory3 = new ResCategory();
+        resCategory3.setCreated(System.currentTimeMillis());
+        resCategory3.setUpdated(System.currentTimeMillis());
+        resCategory3.setType(ResContentTypeEnum.ENTITY.getCode());
+        resCategory3.setName("首页推荐场地");
+        resCategoryRepository.save(resCategory3);
+
     }
 
     @Test
     public void addResourceContent(){
         ResContent resContentBanner1 = new ResContent();
+        resContentBanner1.setCityId(1L);
         resContentBanner1.setCategoryId(ResourceConstant.INDEX_BANNER_CATEGORY_ID);
-        resContentBanner1.setContentType(ResContentTypeEnum.H5);
-        resContentBanner1.setTitle("SCANDAL");
+        resContentBanner1.setContentType(ResContentTypeEnum.LINK.getCode());
+        resContentBanner1.setTitle("GTDPYZ");
         resContentBanner1.setContent("http://music.163.com/#/artist?id=21324");
         resContentBanner1.setCreated(System.currentTimeMillis());
         resContentBanner1.setUpdated(System.currentTimeMillis());
         resContentBanner1.setImage("http://p4.music.126.net/4PddpEZXtQ1XHVtP-Wo8fQ==/3396391422778665.jpg?param=640y300");
 
         ResContent resContentBanner2 = new ResContent();
+        resContentBanner1.setCityId(1L);
         resContentBanner2.setCategoryId(ResourceConstant.INDEX_BANNER_CATEGORY_ID);
-        resContentBanner2.setContentType(ResContentTypeEnum.H5);
-        resContentBanner2.setTitle("Vinnie Vincent Invasion");
+        resContentBanner2.setContentType(ResContentTypeEnum.LINK.getCode());
+        resContentBanner2.setTitle("特大喜讯");
         resContentBanner2.setContent("http://music.163.com/#/artist?id=83777");
         resContentBanner2.setCreated(System.currentTimeMillis());
         resContentBanner2.setUpdated(System.currentTimeMillis());
         resContentBanner2.setImage("http://p4.music.126.net/F2Y3NkUf2486fgspymeeZg==/641015279005540.jpg?param=640y300");
 
         ResContent resContentBanner3 = new ResContent();
+        resContentBanner1.setCityId(1L);
         resContentBanner3.setCategoryId(ResourceConstant.INDEX_BANNER_CATEGORY_ID);
-        resContentBanner3.setContentType(ResContentTypeEnum.H5);
-        resContentBanner3.setTitle("The Stone Roses");
+        resContentBanner3.setContentType(ResContentTypeEnum.LINK.getCode());
+        resContentBanner3.setTitle("666！！！sixsixsix");
         resContentBanner3.setContent("http://music.163.com/#/artist?id=102012");
         resContentBanner3.setCreated(System.currentTimeMillis());
         resContentBanner3.setUpdated(System.currentTimeMillis());
@@ -104,17 +126,52 @@ public class AppDataInitTest {
         resContentRepository.save(resContentBanner2);
         resContentRepository.save(resContentBanner3);
 
-//        for ( int i=0;i<15;i++ ){
-//            ResContent resContentList = new ResContent();
-//            resContentList.setCategoryId(ResourceConstant.INDEX_RECOMMEND_DATA_RESCOURE_ID);
-//            resContentList.setContentType(ResContentTypeEnum.ARTIST);
-//            resContentList.setTitle("Metallica"+getRandomString(4)+i);
-//            resContentList.setContent("http://music.163.com/#/artist?id=38851");
-//            resContentList.setCreated(System.currentTimeMillis());
-//            resContentList.setUpdated(System.currentTimeMillis());
-//            resContentList.setImage("http://p3.music.126.net/0_V3ZaFbEc4PPf_HPmkmCQ==/501377302267748.jpg?param=200y200");
-//            resContentRepository.save(resContentList);
-//        }
+        //首页每日推新
+        for ( int i=0;i<6;i++ ){
+            ResContent resContentList = new ResContent();
+            resContentList.setCityId(1L);
+            resContentList.setCategoryId(ResourceConstant.INDEX_RECOMMEND_NEW_CATEGORY_ID);
+            resContentList.setContentType(ResContentTypeEnum.ENTITY.getCode());
+            resContentList.setTitle("新鲜肥美"+getRandomString(4)+i);
+            resContentList.setContent("http://music.163.com/#/artist?id=38851");
+            resContentList.setCreated(System.currentTimeMillis());
+            resContentList.setUpdated(System.currentTimeMillis());
+            resContentList.setImage(getRandomImage());
+            resContentList.setContentId(30L);
+            resContentRepository.save(resContentList);
+        }
+
+        //首页推荐艺人
+        for ( int i=0;i<6;i++ ){
+            ResContent resContentList = new ResContent();
+            resContentList.setCityId(1L);
+            resContentList.setCategoryId(ResourceConstant.INDEX_RECOMMEND_ARTIST_CATEGORY_ID);
+            resContentList.setContentType(ResContentTypeEnum.ENTITY.getCode());
+            resContentList.setTitle("张泰"+getRandomString(4)+i);
+            resContentList.setContent("http://music.163.com/#/artist?id=38851");
+            resContentList.setCreated(System.currentTimeMillis());
+            resContentList.setUpdated(System.currentTimeMillis());
+            resContentList.setImage(getRandomImage());
+            resContentList.setContentId(30L);
+            resContentRepository.save(resContentList);
+        }
+
+        //首页推荐场地
+        for ( int i=0;i<6;i++ ){
+            ResContent resContentList = new ResContent();
+            resContentList.setCityId(1L);
+            resContentList.setCategoryId(ResourceConstant.INDEX_RECOMMEND_FIELD_CATEGORY_ID);
+            resContentList.setContentType(ResContentTypeEnum.ENTITY.getCode());
+            resContentList.setTitle("望京洗浴中心"+getRandomString(4)+i);
+            resContentList.setContent("http://music.163.com/#/artist?id=38851");
+            resContentList.setCreated(System.currentTimeMillis());
+            resContentList.setUpdated(System.currentTimeMillis());
+            resContentList.setImage(getRandomImage());
+            resContentList.setContentId(30L);
+            resContentRepository.save(resContentList);
+        }
+
+
     }
 
     @Test
@@ -209,6 +266,21 @@ public class AppDataInitTest {
 //        category5.setUpdated(time);
 //        categoryRepository.save(category5);
 
+    }
+
+    private static String getRandomImage(){
+        List<String> imgList = new ArrayList<String>();
+        imgList.add("http://p3.music.126.net/GcGObM0W2H-85xbDxNa7oQ==/18671906464213137.jpg");
+        imgList.add("http://p3.music.126.net/k_bkl0lOSDJ0EbqeRfQlhQ==/5932964743916456.jpg");
+        imgList.add("http://p4.music.126.net/DGVvGmqU1eR2heiKyjID2w==/5953855464844606.jpg");
+        imgList.add("http://p3.music.126.net/jwPGBQaLdCa7CWuwH5nFTA==/3435973836817977.jpg");
+        imgList.add("http://p4.music.126.net/wfy9mtzfAMvn_I8Vnig9sg==/242992069755712.jpg");
+        imgList.add("http://p3.music.126.net/49uvRTKN2U6BN3x2KRzU1w==/219902325576224.jpg");
+        imgList.add("http://p4.music.126.net/cUXJXzIzG2_uaa5W0RcZHQ==/660806488305444.jpg");
+        imgList.add("http://p4.music.126.net/4rMzFqH6_DEj9hm081N3xw==/745468883638663.jpg");
+        Random random = new Random();
+        int n = random.nextInt(imgList.size());
+        return imgList.get(n);
     }
 
 

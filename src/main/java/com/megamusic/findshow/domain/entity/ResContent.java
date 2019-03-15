@@ -1,6 +1,5 @@
 package com.megamusic.findshow.domain.entity;
 
-import com.megamusic.findshow.domain.entity.constant.ResContentTypeEnum;
 import lombok.Data;
 import javax.persistence.*;
 
@@ -26,7 +25,7 @@ public class ResContent {
     @Column
     private String content;  //内容 类型为H5的时候 存页面地址
     @Column
-    private ResContentTypeEnum contentType; //数据类型
+    private Integer contentType; //数据类型
     @Column
     private Long contentId;  //实体id
     @Column(nullable = false,columnDefinition="tinyint default 0")
@@ -35,4 +34,5 @@ public class ResContent {
     private Long created;
     @Column
     private Long updated;
+
 }

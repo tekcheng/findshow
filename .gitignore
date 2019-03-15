@@ -22,5 +22,6 @@ target
 .module-cache
 .sass-cache
 application.properties
+.properties
 
 **/workspace.xml

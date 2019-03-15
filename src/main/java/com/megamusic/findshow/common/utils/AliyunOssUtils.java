@@ -4,6 +4,7 @@ import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -16,13 +17,14 @@ import java.util.Date;
  * Created by chengchao on 2018/2/13.
  */
 @Component
+@Slf4j
 public class AliyunOssUtils {
 
 
     private static String endpoint;
     private static String accessKeyId;
     private static String accessKeySecret;
-    private static String bucketName = "findshow";
+    private static String bucketName;
     // 文件访问域名
     private static String fileHost;
 
@@ -51,10 +53,8 @@ public class AliyunOssUtils {
             if (null != result) {
                 return fileHost + fileUrl;
             }
-        } catch (OSSException oe) {
-            //TODO LOG
-        } catch (ClientException ce) {
-            //TODO LOG
+        } catch (Exception oe) {
+            log.error("[oss上传图片失败] ",oe);
         } finally {
             // 关闭OSS服务
             ossClient.shutdown();
@@ -69,17 +69,20 @@ public class AliyunOssUtils {
         ossClient.deleteObject(bucketName, key);
     }
 
-
+    @Value("${bucketName}")
+    public void setBucketName(String bucketName) {
+        this.bucketName = bucketName;
+    }
 
     @Value("${endpoint}")
     public void setEndpoint(String endpoint) {
         this.endpoint = endpoint;
     }
-    @Value("${accessKeyId}")
+    @Value("${ossAccessKeyId}")
     public void setAccessKeyId(String accessKeyId) {
         this.accessKeyId = accessKeyId;
     }
-    @Value("${accessKeySecret}")
+    @Value("${ossAccessKeySecret}")
     public void setAccessKeySecret(String accessKeySecret) {
         this.accessKeySecret = accessKeySecret;
     }

@@ -1,7 +1,13 @@
 package com.megamusic.findshow.service;
 
+import com.megamusic.findshow.dao.ArtistRepository;
+import com.megamusic.findshow.dao.ResCategoryRepository;
 import com.megamusic.findshow.dao.ResContentRepository;
+import com.megamusic.findshow.domain.entity.Artist;
+import com.megamusic.findshow.domain.entity.ResCategory;
 import com.megamusic.findshow.domain.entity.ResContent;
+import com.megamusic.findshow.domain.entity.constant.ResContentTypeEnum;
+import com.megamusic.findshow.domain.vo.ArtistVo;
 import com.megamusic.findshow.domain.vo.ResourceVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +29,19 @@ public class ResourceService {
     @Autowired
     private ResContentRepository resContentRepository;
 
-    public List<ResourceVo> getResContentById(Long cateId, Integer pageNum, Integer pageSize) {
+    @Autowired
+    private ResCategoryRepository resCategoryRepository;
+
+    @Autowired
+    private ArtistRepository artistRepository;
+
+    public List<ResourceVo> getResContentById(Long cityId,Long cateId, Integer pageNum, Integer pageSize) {
+        //获取资源位
+        ResCategory resCategory = resCategoryRepository.findOne(cateId);
+        if(resCategory==null)
+            return null;
+
+        //获取资源位下数据
         if( pageNum==null || pageNum<0 )
             pageNum=0;
         if(pageSize==null || pageSize>50)
@@ -39,7 +57,7 @@ public class ResourceService {
         Sort sort = new Sort(orderList);
         Pageable pageable = new PageRequest(pageNum,pageSize,sort);
 
-        Page<ResContent> pageResult =resContentRepository.findByCategoryId(cateId,pageable);
+        Page<ResContent> pageResult = resContentRepository.findByCityIdAndCategoryId(cityId,cateId,pageable);
         List<ResContent> resContentList = pageResult.getContent();
 
         if(CollectionUtils.isEmpty(resContentList)){
@@ -48,14 +66,35 @@ public class ResourceService {
 
         for( ResContent resContent:resContentList  ){
             ResourceVo<String> resourceVo = new ResourceVo<String>();
-            resourceVo.setContent(resContent.getContent());
-            resourceVo.setContentId(resContent.getContentId()+"");
-            resourceVo.setContentType(resContent.getContentType());
-            resourceVo.setImage(resContent.getImage());
-            resourceVo.setTitle(resContent.getTitle());
+            if(resCategory.getType().equals(ResContentTypeEnum.LINK.getCode())){
+                resourceVo.setContentType(ResContentTypeEnum.LINK.getCode());
+                resourceVo.setImage(resContent.getImage());
+                resourceVo.setTitle(resContent.getTitle());
+                resourceVo.setContent(resContent.getContent());
+            } else if(resCategory.getType().equals(ResContentTypeEnum.ENTITY.getCode())) {
+                resourceVo.setContentId(resContent.getContentId().toString());
+                resourceVo.setContentType(ResContentTypeEnum.ENTITY.getCode());
+                resourceVo.setImage(resContent.getImage());
+                resourceVo.setTitle(resContent.getTitle());
+            }
             resultList.add(resourceVo);
         }
 
         return resultList;
+    }
+
+    private ArtistVo generateArtistVo(Long artistId) {
+        Artist artist = artistRepository.findOne(artistId);
+        if(artist==null)
+            return null;
+        ArtistVo artistVo = new ArtistVo();
+        artistVo.setId(artist.getId().toString());
+        artistVo.setName(artist.getName());
+        artistVo.setShortDesc(artist.getShortDesc());
+        artistVo.setShortDesc2(artist.getShortDesc2());
+        artistVo.setTipTag(artist.getTipTag());
+        artistVo.setPopularity(artist.getPopularity());
+        artistVo.setCover(artist.getCover());
+        return artistVo;
     }
 }

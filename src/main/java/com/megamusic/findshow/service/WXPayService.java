@@ -12,8 +12,6 @@ import com.megamusic.findshow.domain.entity.Artist;
 import com.megamusic.findshow.domain.entity.Order;
 import com.megamusic.findshow.domain.entity.User;
 import com.megamusic.findshow.domain.entity.constant.DeleteCodeEnum;
-import com.megamusic.findshow.domain.entity.constant.OrderType;
-import com.megamusic.findshow.domain.entity.constant.PayStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.helpers.MessageFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,9 +93,9 @@ public class WXPayService {
         order.setPayAmount(amount);
         order.setArtistId(artistId);
         order.setArtistType(artist.getType());
-        order.setOrderType(OrderType.CONTACT);
-        order.setPayStatus(PayStatus.PAY_SUCCESS);
-        order.setIsDeleted(DeleteCodeEnum.NOT_DELETEED);
+        order.setOrderType(Order.OrderType.CONTACT.getCode());
+        order.setPayStatus(Order.PayStatus.PAY_SUCCESS.getCode());
+        order.setIsDeleted(DeleteCodeEnum.NOT_DELETEED.getCode());
         order.setCreated(System.currentTimeMillis());
         order.setUpdated(System.currentTimeMillis());
         orderRepository.save(order);
@@ -234,7 +232,7 @@ public class WXPayService {
             return;
         }
 
-        order.setPayStatus(PayStatus.CALLBACK);
+        order.setPayStatus(Order.PayStatus.CALLBACK.getCode());
         order.setUpdated(System.currentTimeMillis());
         order.setTransactionId(wxTranId);
         orderRepository.save(order);

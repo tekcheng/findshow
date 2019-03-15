@@ -9,5 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Created by maita on 17/8/16.
  */
 public interface ResContentRepository extends JpaRepository<ResContent,Long>{
-    Page<ResContent> findByCategoryId(Long cateId, Pageable pageable);
+    Page<ResContent> findByCityIdAndCategoryId(Long cityId,Long cateId, Pageable pageable);
+
 }

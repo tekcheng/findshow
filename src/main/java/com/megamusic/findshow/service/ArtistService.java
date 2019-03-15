@@ -9,12 +9,11 @@ import com.megamusic.findshow.domain.entity.Artist;
 import com.megamusic.findshow.domain.entity.ArtistInfo;
 import com.megamusic.findshow.domain.entity.Category;
 import com.megamusic.findshow.domain.entity.Order;
+import com.megamusic.findshow.domain.entity.constant.ArtistTypeEnum;
 import com.megamusic.findshow.domain.entity.constant.CityEnum;
 import com.megamusic.findshow.domain.entity.constant.DeleteCodeEnum;
-import com.megamusic.findshow.domain.entity.constant.PayStatus;
 import com.megamusic.findshow.domain.vo.ArtistDetailVo;
 import com.megamusic.findshow.domain.vo.ArtistVo;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -43,7 +42,8 @@ public class ArtistService {
     @Autowired
     private OrderRepository orderRepository;
 
-    public List<ArtistVo> getArtistByCateId(Long cateId, Integer pageNum, Integer pageSize) {
+
+    public List<ArtistVo> getArtistByCateIdAndCityId(Integer cityId,Long cateId, Integer pageNum, Integer pageSize) {
         if (pageSize == null) pageSize = 20;
         if (pageNum == null || pageNum < 0) pageNum = 0;
 
@@ -64,9 +64,9 @@ public class ArtistService {
          */
         List<Artist> artistList = new ArrayList<Artist>();
         if (cateId == null || cateId == 0L) {
-            artistList = artistRepository.findByIsDeleted(DeleteCodeEnum.NOT_DELETEED.getCode(), pageable).getContent();
+            artistList = artistRepository.findByCityIdAndIsDeleted(cityId,DeleteCodeEnum.NOT_DELETEED.getCode(), pageable).getContent();
         } else {
-            artistList = artistRepository.findByCategoryIdAndIsDeleted(cateId, DeleteCodeEnum.NOT_DELETEED.getCode(), pageable).getContent();
+            artistList = artistRepository.findByCityIdAndCategoryIdAndIsDeleted(cityId,cateId, DeleteCodeEnum.NOT_DELETEED.getCode(), pageable).getContent();
         }
 
 
@@ -83,9 +83,12 @@ public class ArtistService {
             ArtistVo artistVo = new ArtistVo();
             artistVo.setId(artist.getId() + "");
             artistVo.setName(artist.getName());
-            artistVo.setType(artist.getType());
-            artistVo.setDescription(artist.getDescription());
+            artistVo.setType(ArtistTypeEnum.getEnumByCode(artist.getType()));
+            artistVo.setShortDesc(artist.getShortDesc());
+            artistVo.setShortDesc2(artist.getShortDesc2());
             artistVo.setCover(artist.getCover());
+            artistVo.setPopularity(artist.getPopularity());
+            artistVo.setTipTag(artist.getTipTag());
             if (artist.getCategoryId() != null) {
                 artistVo.setCategoryId(artist.getCategoryId().toString());
                 Category category = categoryMap.get(artist.getCategoryId());
@@ -114,7 +117,7 @@ public class ArtistService {
             return null;
 
         artistDetailVo.setId(artist.getId().toString());
-        artistDetailVo.setType(artist.getType().getCode());
+        artistDetailVo.setType(artist.getType());
         artistDetailVo.setName(artist.getName());
         artistDetailVo.setAge(artist.getAge());
         artistDetailVo.setAvatar(artist.getCover());
@@ -163,7 +166,7 @@ public class ArtistService {
         artistDetailVo.setShowContact(false);
         //判断联系方式是否可见
         if (userId != null) {
-            Order order = orderRepository.getByUserIdAndArtistIdAndPayStatus(userId, artistId, PayStatus.CALLBACK);
+            Order order = orderRepository.getByUserIdAndArtistIdAndPayStatus(userId, artistId, Order.PayStatus.CALLBACK.getCode());
             if(order!=null){
                 artistDetailVo.setShowContact(true);
                 artistDetailVo.setWeibo(artistInfo.getWeibo());

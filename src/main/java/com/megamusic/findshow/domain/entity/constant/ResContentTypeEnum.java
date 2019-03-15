@@ -1,11 +1,10 @@
 package com.megamusic.findshow.domain.entity.constant;
 
 /**
- * Created by maita on 17/8/15.
- * 资源位资源类型
+ * Created by chengchao on 2018/12/18.
  */
-public enum ResContentTypeEnum {
-    ENTITY(0,"实体"),H5(4,"h5页面");
+public enum  ResContentTypeEnum {
+    ENTITY(1,"实体"),LINK(2,"h5页面");
 
     private Integer code;
     private String name;

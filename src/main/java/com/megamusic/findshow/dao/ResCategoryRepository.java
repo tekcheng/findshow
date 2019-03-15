@@ -1,6 +1,9 @@
 package com.megamusic.findshow.dao;
 
 import com.megamusic.findshow.domain.entity.ResCategory;
+import com.megamusic.findshow.domain.entity.ResContent;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

@@ -33,19 +33,20 @@ public class ArtistController {
 
     @RequestMapping("category/list")
     @ResponseBody
-    public Response indexBanner(@RequestParam(defaultValue = "0") String fpage,
-                                @RequestParam(defaultValue = "0") Long cateId){
+    public Response categoryList(@RequestParam(defaultValue = "0") String fpage,
+                                @RequestParam(defaultValue = "0") Long cateId,
+                                @RequestParam(defaultValue = "1") Integer cityId){
         Integer pageNum = Integer.valueOf(fpage);
         Integer pageSize= 10;
-
         DataCollectionVo<ArtistVo> dataCollectionVo = new DataCollectionVo<ArtistVo>();
-        List<ArtistVo> result = artistService.getArtistByCateId(cateId,pageNum,pageSize);
-        dataCollectionVo.setList(result);
+
+        List<ArtistVo> rcmDataList = artistService.getArtistByCateIdAndCityId(cityId,cateId,pageNum,pageSize);
+
         Integer nextPage = pageNum + 1;
         dataCollectionVo.setFpage(nextPage+"");
-        if(CollectionUtils.isEmpty(result) || result.size()<pageSize ){
+        dataCollectionVo.setList(rcmDataList);
+        if(CollectionUtils.isEmpty(rcmDataList))
             dataCollectionVo.setEnd(true);
-        }
         return ResponseUtils.getSuccessResponse(dataCollectionVo);
 
     }
