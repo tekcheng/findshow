@@ -30,9 +30,15 @@ public class Order {
     @Column
     private String orderTitle;
 
-    //订单备注描述
+    //订单备注描述 （预留）
     @Column
     private String orderInfo;
+
+    /**
+     * 订单图片（冗余）
+     */
+    @Column
+    private String orderImage;
 
     //订单金额
     @Column
@@ -46,7 +52,7 @@ public class Order {
     @Column
     private Long artistId;
 
-    //商品类型
+    //商品类型  艺人，场地
     @Column(nullable = false,columnDefinition="tinyint default 0")
     private Integer artistType;
 
@@ -57,6 +63,10 @@ public class Order {
     //支付状态
     @Column(nullable = false,columnDefinition="tinyint default 0")
     private Integer payStatus;
+
+    //生成预支付单后返回的预支付单号
+    @Column
+    private String prepayId;
 
     //删除 1 删除
     @Column(nullable = false,columnDefinition="tinyint default 0")
@@ -104,7 +114,7 @@ public class Order {
         AUDITING(1,"审核中"),
         PASS(2,"审核通过待支付"),
         REJECT(3,"审核拒绝-已关闭"),
-        PAY_SUCCESS(4,"支付成功-待确认"),
+        //GEN_ORDER_SUCCESS(4,"生成支付单"),
         FAIL(5,"支付失败"),
         CALLBACK(6,"回调成功"),
         DONE(7,"已确认完成")

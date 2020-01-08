@@ -1,0 +1,248 @@
+ <#include "public/header.html">
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+                <#include "public/menu.html">
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">主页</a>
+							</li>
+
+							<li>
+								<a href="#">场地管理</a>
+							</li>
+							<li class="active">全部场地</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								平台场地
+								<small>
+									<i class="icon-double-angle-right"></i>
+									列表
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+								<div class="row">
+									<div class="col-xs-12">
+										<div class="table-responsive">
+											<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+												<thead>
+													<tr>
+														<th class="center">
+															<label>
+																<input type="checkbox" class="ace" />
+																<span class="lbl"></span>
+															</label>
+														</th>
+														<th>id</th>
+														<th>场地名称</th>
+														<th>地址</th>
+														<th class="hidden-480">状态</th>
+														<th>权重</th>
+														<th>
+															<i class="icon-time bigger-110 hidden-480"></i>
+															创建时间
+														</th>
+														<th>
+															<i class="icon-time bigger-110 hidden-480"></i>
+															更新时间
+														</th>
+
+														<th>操作</th>
+													</tr>
+												</thead>
+
+												<tbody>
+
+                                                <#list dataList as _dl>
+
+                                                    <tr>
+														<td class="center">
+															<label>
+																<input type="checkbox" class="ace" />
+																<span class="lbl"></span>
+															</label>
+														</td>
+
+														<td>
+                                                            ${_dl.id}
+														</td>
+														<td>${_dl.name}</td>
+														<td class="hidden-480">${_dl.address}</td>
+														<td class="hidden-480">
+															<span class="label label-sm label-warning">上线</span>
+														</td>
+														<td>${_dl.sort!}</td>
+														<td>${_dl.created?number_to_datetime}</td>
+														<td>${_dl.updated?number_to_datetime}</td>
+
+														<td>
+															<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+																<a class="blue" href="/op/area/edit?aid=${_dl.id}" >
+																	<i class="icon-zoom-in bigger-130"></i>
+																</a>
+
+																<a class="green" href="/op/area/edit?aid=${_dl.id}" >
+																	<i class="icon-pencil bigger-130"></i>
+																</a>
+
+																<a class="red delete-confirm" href="#" artist-id="${_dl.id}">
+																	<i class="icon-trash bigger-130"></i>
+																</a>
+															</div>
+														</td>
+													</tr>
+
+                                                    </#list>
+
+                                                </tbody>
+											</table>
+										</div><!-- /.table-responsive -->
+									</div><!-- /span -->
+								</div><!-- /row -->
+
+                                <!--bootstrap3版本用ul包裹分页-->
+                                <ul class="pagination"></ul>
+
+								<div class="hr hr-18 dotted hr-double"></div>
+
+
+							
+								</div><!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+
+
+
+
+     <!-- inline scripts related to this page -->
+     <script src="/serverstatic/bootstrap-paginator/src/bootstrap-paginator.js"></script>
+     <script src="/serverstatic/js/bootbox.min.js"></script>
+
+
+    <script type="text/javascript">
+        jQuery(function($) {
+
+            $('table th input:checkbox').on('click' , function(){
+                var that = this;
+                $(this).closest('table').find('tr > td:first-child input:checkbox')
+                    .each(function(){
+                        this.checked = that.checked;
+                        $(this).closest('tr').toggleClass('selected');
+                    });
+
+            });
+
+
+            $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+            function tooltip_placement(context, source) {
+                var $source = $(source);
+                var $parent = $source.closest('table')
+                var off1 = $parent.offset();
+                var w1 = $parent.width();
+
+                var off2 = $source.offset();
+                var w2 = $source.width();
+
+                if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+                return 'left';
+            }
+
+            //分页js
+            var options = {
+                        currentPage:${curPage} || 1, //设置当前页，默认起始页为第一页
+                totalPages:${total}, //总页数
+                numberOfPages:5, //设置控件显示的页码数,跟后台计算出来的总页数没多大关系
+                bootstrapMajorVersion:3,//如果是bootstrap3版本需要加此标识，并且设置包含分页内容的DOM元素为UL,如果是bootstrap2版本，则DOM包含元素是DIV
+                useBootstrapTooltip:'true',//是否显示tip提示框
+                pageUrl:function(type,page, current){
+                return '?pageNum='+page //为每个页码设置url访问请求链接，page为页码数
+            },
+            itemTexts:function(type,page, current){//文字翻译
+                switch (type) {
+                    case "first":
+                        return "首页";
+                    case "prev":
+                        return "上一页";
+                    case "next":
+                        return "下一页";
+                    case "last":
+                        return "尾页";
+                    case "page":
+                        return page;
+                }
+            }
+        }
+        $('.pagination').bootstrapPaginator(options);
+
+
+
+        $(".delete-confirm").on(ace.click_event, function() {
+			var aid = $(this).attr("artist-id");
+			bootbox.confirm("真的要删除人家 =。=！?", function(result) {
+				if(result) {
+					console.log("删除ajax"+aid);
+					$.ajax({
+					  type: 'GET',
+					  url: "/op/area/delete?aid="+aid,
+					  //data: data,
+					  success: function(data){
+					  	if( data.code==1001){
+					  		alert("删除成功");
+					  	}else{
+					  		alert("删除失败");	
+					  	}
+					  	window.location.reload();
+					  }
+					});
+					
+					
+				}
+			});
+		});
+
+
+        })
+    </script>
+
+
+</body>
+</html>

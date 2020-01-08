@@ -10,7 +10,7 @@ import com.megamusic.findshow.domain.entity.Artist;
 import com.megamusic.findshow.domain.entity.Category;
 import com.megamusic.findshow.domain.entity.ResCategory;
 import com.megamusic.findshow.domain.entity.ResContent;
-import com.megamusic.findshow.domain.entity.constant.ArtistTypeEnum;
+import com.megamusic.findshow.domain.entity.constant.EntityTypeEnum;
 import com.megamusic.findshow.domain.entity.constant.ResContentTypeEnum;
 import com.megamusic.findshow.domain.trans.WYArtistData;
 import com.megamusic.findshow.domain.trans.WYResponse;
@@ -21,6 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -43,6 +44,7 @@ public class AppDataInitTest {
     @Autowired
     private CategoryRepository categoryRepository;
 
+
     @Test
     public void importArtistData(){
         String jsonStr = "{\"data\":[{\"info\":\"\",\"id\":29321,\"name\":\"Bob Marley\",\"trans\":\"鲍勃.马利\",\"alias\":[],\"albumSize\":54,\"mvSize\":0,\"picId\":834529325511487,\"picUrl\":\"http://p4.music.126.net/fXEZ4-feJxUYYAweBN-1Iw==/834529325511487.jpg\",\"img1v1Url\":\"http://p3.music.126.net/fXEZ4-feJxUYYAweBN-1Iw==/834529325511487.jpg\"},{\"info\":\"\",\"id\":35439,\"name\":\"John Scofield\",\"trans\":\"约翰.斯科菲尔德\",\"alias\":[],\"albumSize\":42,\"mvSize\":0,\"picId\":280375465104479,\"picUrl\":\"http://p3.music.126.net/oLeRI-0XkGsukaosmVv2hQ==/280375465104479.jpg\",\"img1v1Url\":\"http://p3.music.126.net/oLeRI-0XkGsukaosmVv2hQ==/280375465104479.jpg\"},{\"info\":\"新碟《Between》抢鲜上架\",\"id\":45854,\"name\":\"Wes Montgomery\",\"trans\":\"韦斯.蒙哥马利\",\"alias\":[],\"albumSize\":65,\"mvSize\":0,\"picId\":189115999998792,\"picUrl\":\"http://p3.music.126.net/FYj8oMyBTfZW1rE8YucUQA==/189115999998792.jpg\",\"img1v1Url\":\"http://p3.music.126.net/FYj8oMyBTfZW1rE8YucUQA==/189115999998792.jpg\"},{\"info\":\"\",\"id\":41148,\"name\":\"Pat Metheny\",\"trans\":\"帕特-梅思尼\",\"alias\":[],\"albumSize\":46,\"mvSize\":0,\"picId\":628920651122280,\"picUrl\":\"http://p4.music.126.net/TSnZpGGKAy28JIx3c5tPjg==/628920651122280.jpg\",\"img1v1Url\":\"http://p3.music.126.net/TSnZpGGKAy28JIx3c5tPjg==/628920651122280.jpg\"},{\"info\":\"新碟《永远都会在》抢鲜上架\",\"id\":12111,\"name\":\"旅行团\",\"trans\":null,\"alias\":[],\"albumSize\":16,\"mvSize\":9,\"picId\":18770862511360987,\"picUrl\":\"http://p3.music.126.net/hHpJ6SfH4D2bh3FLMAkiNA==/18770862511360987.jpg\",\"img1v1Url\":\"http://p4.music.126.net/hHpJ6SfH4D2bh3FLMAkiNA==/18770862511360987.jpg\"},{\"info\":\"新碟《Who You Selling For》抢鲜上架\",\"id\":102738,\"name\":\"The Pretty Reckless\",\"trans\":null,\"alias\":[],\"albumSize\":14,\"mvSize\":18,\"picId\":134140418605382,\"picUrl\":\"http://p4.music.126.net/A0xDl9OA1DpZiqH7ZjBisw==/134140418605382.jpg\",\"img1v1Url\":\"http://p3.music.126.net/A0xDl9OA1DpZiqH7ZjBisw==/134140418605382.jpg\"},{\"info\":\"新碟《Fake Happy (Edit)》抢鲜上架\",\"id\":41129,\"name\":\"Paramore\",\"trans\":null,\"alias\":[],\"albumSize\":35,\"mvSize\":22,\"picId\":377132488334070,\"picUrl\":\"http://p4.music.126.net/AlLOUqWQ8TVhCFTPK9u6WQ==/377132488334070.jpg\",\"img1v1Url\":\"http://p4.music.126.net/AlLOUqWQ8TVhCFTPK9u6WQ==/377132488334070.jpg\"},{\"info\":\"新碟《OK Computer OKNOTOK 1997 2017》抢鲜上架\",\"id\":99384,\"name\":\"Radiohead\",\"trans\":\"电台司令\",\"alias\":[\"收音机头\",\"无线电迷\"],\"albumSize\":61,\"mvSize\":11,\"picId\":242992069755712,\"picUrl\":\"http://p4.music.126.net/wfy9mtzfAMvn_I8Vnig9sg==/242992069755712.jpg\",\"img1v1Url\":\"http://p3.music.126.net/wfy9mtzfAMvn_I8Vnig9sg==/242992069755712.jpg\"},{\"info\":\"新碟《Madness》抢鲜上架\",\"id\":27639,\"name\":\"All That Remains\",\"trans\":null,\"alias\":[],\"albumSize\":14,\"mvSize\":8,\"picId\":214404767433799,\"picUrl\":\"http://p4.music.126.net/uNdaDUfZfP6L2uX8nJS2-A==/214404767433799.jpg\",\"img1v1Url\":\"http://p4.music.126.net/uNdaDUfZfP6L2uX8nJS2-A==/214404767433799.jpg\"},{\"info\":\"新碟《The Duke》抢鲜上架\",\"id\":38134,\"name\":\"Lamb of God\",\"trans\":\"上帝的羔羊\",\"alias\":[],\"albumSize\":18,\"mvSize\":12,\"picId\":292470092995116,\"picUrl\":\"http://p3.music.126.net/iCL7MyXDF1UPL0SLwH7urg==/292470092995116.jpg\",\"img1v1Url\":\"http://p3.music.126.net/iCL7MyXDF1UPL0SLwH7urg==/292470092995116.jpg\"},{\"info\":\"新碟《The Absolute》抢鲜上架\",\"id\":90521,\"name\":\"Dark Tranquillity\",\"trans\":null,\"alias\":[],\"albumSize\":30,\"mvSize\":0,\"picId\":764160581316010,\"picUrl\":\"http://p3.music.126.net/E6ddUNJ38u79fIwBRFEzqQ==/764160581316010.jpg\",\"img1v1Url\":\"http://p3.music.126.net/E6ddUNJ38u79fIwBRFEzqQ==/764160581316010.jpg\"},{\"info\":\"\",\"id\":12877,\"name\":\"丝绒公路\",\"trans\":null,\"alias\":[\"velvetroad\"],\"albumSize\":2,\"mvSize\":0,\"picId\":18671906464213137,\"picUrl\":\"http://p3.music.126.net/GcGObM0W2H-85xbDxNa7oQ==/18671906464213137.jpg\",\"img1v1Url\":\"http://p3.music.126.net/GcGObM0W2H-85xbDxNa7oQ==/18671906464213137.jpg\"},{\"info\":\"新碟《Breakin' Outta Hell》抢鲜上架\",\"id\":85659,\"name\":\"Airbourne\",\"trans\":null,\"alias\":[],\"albumSize\":8,\"mvSize\":1,\"picId\":327654465077266,\"picUrl\":\"http://p3.music.126.net/kiIRJu3SoVrvhreYI2OChQ==/327654465077266.jpg\",\"img1v1Url\":\"http://p4.music.126.net/kiIRJu3SoVrvhreYI2OChQ==/327654465077266.jpg\"},{\"info\":\"\",\"id\":99997,\"name\":\"Skid Row\",\"trans\":\"穷街乐队\",\"alias\":[],\"albumSize\":14,\"mvSize\":1,\"picId\":5932964743916456,\"picUrl\":\"http://p3.music.126.net/k_bkl0lOSDJ0EbqeRfQlhQ==/5932964743916456.jpg\",\"img1v1Url\":\"http://p4.music.126.net/k_bkl0lOSDJ0EbqeRfQlhQ==/5932964743916456.jpg\"},{\"info\":\"\",\"id\":99989,\"name\":\"Sum 41\",\"trans\":null,\"alias\":[],\"albumSize\":32,\"mvSize\":10,\"picId\":277076930217020,\"picUrl\":\"http://p3.music.126.net/cPwZ9GpwptoXEjIu8sQKoA==/277076930217020.jpg\",\"img1v1Url\":\"http://p3.music.126.net/cPwZ9GpwptoXEjIu8sQKoA==/277076930217020.jpg\"},{\"info\":\"\",\"id\":48450,\"name\":\"Bathory\",\"trans\":null,\"alias\":[],\"albumSize\":18,\"mvSize\":0,\"picId\":5953855464844606,\"picUrl\":\"http://p4.music.126.net/DGVvGmqU1eR2heiKyjID2w==/5953855464844606.jpg\",\"img1v1Url\":\"http://p3.music.126.net/DGVvGmqU1eR2heiKyjID2w==/5953855464844606.jpg\"},{\"info\":\"\",\"id\":91723,\"name\":\"Empyrium\",\"trans\":null,\"alias\":[],\"albumSize\":10,\"mvSize\":0,\"picId\":5952755953218931,\"picUrl\":\"http://p4.music.126.net/5y1zJs3t5J3WKO7Yc-NJ6w==/5952755953218931.jpg\",\"img1v1Url\":\"http://p4.music.126.net/5y1zJs3t5J3WKO7Yc-NJ6w==/5952755953218931.jpg\"},{\"info\":\"\",\"id\":42940,\"name\":\"Stratovarius\",\"trans\":\"灵云乐队\",\"alias\":[],\"albumSize\":33,\"mvSize\":0,\"picId\":219902325576224,\"picUrl\":\"http://p3.music.126.net/49uvRTKN2U6BN3x2KRzU1w==/219902325576224.jpg\",\"img1v1Url\":\"http://p4.music.126.net/49uvRTKN2U6BN3x2KRzU1w==/219902325576224.jpg\"},{\"info\":\"\",\"id\":78203,\"name\":\"Therion\",\"trans\":\"圣兽乐队\",\"alias\":[],\"albumSize\":32,\"mvSize\":0,\"picId\":3435973836817977,\"picUrl\":\"http://p3.music.126.net/jwPGBQaLdCa7CWuwH5nFTA==/3435973836817977.jpg\",\"img1v1Url\":\"http://p4.music.126.net/jwPGBQaLdCa7CWuwH5nFTA==/3435973836817977.jpg\"},{\"info\":\"\",\"id\":42963,\"name\":\"Summoning\",\"trans\":null,\"alias\":[],\"albumSize\":9,\"mvSize\":0,\"picId\":5941760836928461,\"picUrl\":\"http://p4.music.126.net/3iHg0SARKxZh-1I41H_Ikw==/5941760836928461.jpg\",\"img1v1Url\":\"http://p4.music.126.net/3iHg0SARKxZh-1I41H_Ikw==/5941760836928461.jpg\"},{\"info\":\"\",\"id\":32674,\"name\":\"Eternal Tears of Sorrow\",\"trans\":null,\"alias\":[],\"albumSize\":9,\"mvSize\":0,\"picId\":752065953410799,\"picUrl\":\"http://p4.music.126.net/37HBDcPl72efvwTKzHnU0A==/752065953410799.jpg\",\"img1v1Url\":\"http://p3.music.126.net/37HBDcPl72efvwTKzHnU0A==/752065953410799.jpg\"},{\"info\":\"\",\"id\":48493,\"name\":\"Behemoth\",\"trans\":null,\"alias\":[],\"albumSize\":28,\"mvSize\":3,\"picId\":583840674354993,\"picUrl\":\"http://p3.music.126.net/oxO49gv74ShhoqL5LnETuA==/583840674354993.jpg\",\"img1v1Url\":\"http://p3.music.126.net/oxO49gv74ShhoqL5LnETuA==/583840674354993.jpg\"},{\"info\":\"\",\"id\":100047,\"name\":\"Shadows Fall\",\"trans\":\"阴影降临\",\"alias\":[],\"albumSize\":10,\"mvSize\":0,\"picId\":660806488305444,\"picUrl\":\"http://p4.music.126.net/cUXJXzIzG2_uaa5W0RcZHQ==/660806488305444.jpg\",\"img1v1Url\":\"http://p4.music.126.net/cUXJXzIzG2_uaa5W0RcZHQ==/660806488305444.jpg\"},{\"info\":\"新碟《Don't Need You》抢鲜上架\",\"id\":88159,\"name\":\"Bullet for My Valentine\",\"trans\":\"致命情人\",\"alias\":[],\"albumSize\":32,\"mvSize\":4,\"picId\":340848604622005,\"picUrl\":\"http://p4.music.126.net/-cRCt1T4egFUoOmpsAsJzg==/340848604622005.jpg\",\"img1v1Url\":\"http://p3.music.126.net/-cRCt1T4egFUoOmpsAsJzg==/340848604622005.jpg\"},{\"info\":\"\",\"id\":85554,\"name\":\"As I Lay Dying\",\"trans\":\"在我弥留之际\",\"alias\":[],\"albumSize\":11,\"mvSize\":2,\"picId\":745468883638663,\"picUrl\":\"http://p4.music.126.net/4rMzFqH6_DEj9hm081N3xw==/745468883638663.jpg\",\"img1v1Url\":\"http://p3.music.126.net/4rMzFqH6_DEj9hm081N3xw==/745468883638663.jpg\"}],\"hasMore\":true,\"code\":200}";
@@ -54,7 +56,7 @@ public class AppDataInitTest {
             artist.setDescription("");
             artist.setCreated(System.currentTimeMillis());
             artist.setUpdated(System.currentTimeMillis());
-            artist.setType(ArtistTypeEnum.ARTIST.getCode());
+            artist.setType(EntityTypeEnum.ARTIST.getCode());
             artistRepository.save(artist);
         }
     }
@@ -71,21 +73,21 @@ public class AppDataInitTest {
         ResCategory resCategory1 = new ResCategory();
         resCategory1.setCreated(System.currentTimeMillis());
         resCategory1.setUpdated(System.currentTimeMillis());
-        resCategory1.setType(ResContentTypeEnum.ENTITY.getCode());
+        resCategory1.setType(ResContentTypeEnum.ARTIST_ENTITY.getCode());
         resCategory1.setName("首页每日推新");
         resCategoryRepository.save(resCategory1);
 
         ResCategory resCategory2 = new ResCategory();
         resCategory2.setCreated(System.currentTimeMillis());
         resCategory2.setUpdated(System.currentTimeMillis());
-        resCategory2.setType(ResContentTypeEnum.ENTITY.getCode());
+        resCategory2.setType(ResContentTypeEnum.ARTIST_ENTITY.getCode());
         resCategory2.setName("首页推荐艺人");
         resCategoryRepository.save(resCategory2);
 
         ResCategory resCategory3 = new ResCategory();
         resCategory3.setCreated(System.currentTimeMillis());
         resCategory3.setUpdated(System.currentTimeMillis());
-        resCategory3.setType(ResContentTypeEnum.ENTITY.getCode());
+        resCategory3.setType(ResContentTypeEnum.ARTIST_ENTITY.getCode());
         resCategory3.setName("首页推荐场地");
         resCategoryRepository.save(resCategory3);
 
@@ -93,6 +95,7 @@ public class AppDataInitTest {
 
     @Test
     public void addResourceContent(){
+        //Banner
         ResContent resContentBanner1 = new ResContent();
         resContentBanner1.setCityId(1L);
         resContentBanner1.setCategoryId(ResourceConstant.INDEX_BANNER_CATEGORY_ID);
@@ -103,35 +106,15 @@ public class AppDataInitTest {
         resContentBanner1.setUpdated(System.currentTimeMillis());
         resContentBanner1.setImage("http://p4.music.126.net/4PddpEZXtQ1XHVtP-Wo8fQ==/3396391422778665.jpg?param=640y300");
 
-        ResContent resContentBanner2 = new ResContent();
-        resContentBanner1.setCityId(1L);
-        resContentBanner2.setCategoryId(ResourceConstant.INDEX_BANNER_CATEGORY_ID);
-        resContentBanner2.setContentType(ResContentTypeEnum.LINK.getCode());
-        resContentBanner2.setTitle("特大喜讯");
-        resContentBanner2.setContent("http://music.163.com/#/artist?id=83777");
-        resContentBanner2.setCreated(System.currentTimeMillis());
-        resContentBanner2.setUpdated(System.currentTimeMillis());
-        resContentBanner2.setImage("http://p4.music.126.net/F2Y3NkUf2486fgspymeeZg==/641015279005540.jpg?param=640y300");
-
-        ResContent resContentBanner3 = new ResContent();
-        resContentBanner1.setCityId(1L);
-        resContentBanner3.setCategoryId(ResourceConstant.INDEX_BANNER_CATEGORY_ID);
-        resContentBanner3.setContentType(ResContentTypeEnum.LINK.getCode());
-        resContentBanner3.setTitle("666！！！sixsixsix");
-        resContentBanner3.setContent("http://music.163.com/#/artist?id=102012");
-        resContentBanner3.setCreated(System.currentTimeMillis());
-        resContentBanner3.setUpdated(System.currentTimeMillis());
-        resContentBanner3.setImage("http://p3.music.126.net/qSnf9OW4Mv3eoKHalQdZPQ==/336450558106551.jpg?param=640y300");
         resContentRepository.save(resContentBanner1);
-        resContentRepository.save(resContentBanner2);
-        resContentRepository.save(resContentBanner3);
+
 
         //首页每日推新
         for ( int i=0;i<6;i++ ){
             ResContent resContentList = new ResContent();
             resContentList.setCityId(1L);
             resContentList.setCategoryId(ResourceConstant.INDEX_RECOMMEND_NEW_CATEGORY_ID);
-            resContentList.setContentType(ResContentTypeEnum.ENTITY.getCode());
+            resContentList.setContentType(ResContentTypeEnum.ARTIST_ENTITY.getCode());
             resContentList.setTitle("新鲜肥美"+getRandomString(4)+i);
             resContentList.setContent("http://music.163.com/#/artist?id=38851");
             resContentList.setCreated(System.currentTimeMillis());
@@ -146,7 +129,7 @@ public class AppDataInitTest {
             ResContent resContentList = new ResContent();
             resContentList.setCityId(1L);
             resContentList.setCategoryId(ResourceConstant.INDEX_RECOMMEND_ARTIST_CATEGORY_ID);
-            resContentList.setContentType(ResContentTypeEnum.ENTITY.getCode());
+            resContentList.setContentType(ResContentTypeEnum.ARTIST_ENTITY.getCode());
             resContentList.setTitle("张泰"+getRandomString(4)+i);
             resContentList.setContent("http://music.163.com/#/artist?id=38851");
             resContentList.setCreated(System.currentTimeMillis());
@@ -161,7 +144,7 @@ public class AppDataInitTest {
             ResContent resContentList = new ResContent();
             resContentList.setCityId(1L);
             resContentList.setCategoryId(ResourceConstant.INDEX_RECOMMEND_FIELD_CATEGORY_ID);
-            resContentList.setContentType(ResContentTypeEnum.ENTITY.getCode());
+            resContentList.setContentType(ResContentTypeEnum.ARTIST_ENTITY.getCode());
             resContentList.setTitle("望京洗浴中心"+getRandomString(4)+i);
             resContentList.setContent("http://music.163.com/#/artist?id=38851");
             resContentList.setCreated(System.currentTimeMillis());
@@ -176,16 +159,7 @@ public class AppDataInitTest {
 
     @Test
     public void addCategory(){
-        /**
-         * 流行歌手，流行乐队，主持礼仪，舞蹈模特，
-         器乐乐团，摄影摄像，音响灯光，合作场地，
-         舞蹈模特，活动策划，艺术私教，全部演绎
 
-         摇滚乐队、爵士乐队、独立音乐、外籍艺人、
-         民族歌手、魔术杂技、器乐独奏、民间艺术、
-         合作机构、幕后制作、夜场嘉宾、直播网红、
-         其他演绎、化妆造型、剧团剧院、助理兼职
-         */
 
         Long time = System.currentTimeMillis();
         Category category6 = new Category();
@@ -266,6 +240,72 @@ public class AppDataInitTest {
 //        category5.setUpdated(time);
 //        categoryRepository.save(category5);
 
+    }
+
+    @Test
+    public void addResourceContentRECOMMEND_NEW(){
+        //List<Long> artistIds = Arrays.asList(52L,53L,55L,58L,59L,60L,61L,62L);
+        List<Long> artistIds = Arrays.asList(52L,53L,55L,58L);
+
+        //首页每日推新
+        for ( Long id:artistIds ){
+            Artist artist = artistRepository.findOne(id);
+            ResContent resContentList = new ResContent();
+            resContentList.setCityId(1L);
+            resContentList.setContentId(artist.getId());
+            resContentList.setCategoryId(ResourceConstant.INDEX_RECOMMEND_NEW_CATEGORY_ID);
+            resContentList.setContentType(ResContentTypeEnum.ARTIST_ENTITY.getCode());
+            resContentList.setImage(artist.getCover());
+            resContentList.setTitle(artist.getName());
+            resContentList.setContent("");
+            resContentList.setCreated(System.currentTimeMillis());
+            resContentList.setUpdated(System.currentTimeMillis());
+            resContentRepository.save(resContentList);
+        }
+    }
+
+    @Test
+    public void addResourceContentINDEX_RECOMMEND_ARTIST(){
+        //List<Long> artistIds = Arrays.asList(52L,53L,55L,58L,59L,60L,61L,62L);
+        List<Long> artistIds = Arrays.asList(59L,60L,61L,62L);
+
+        //首页每日推新
+        for ( Long id:artistIds ){
+            Artist artist = artistRepository.findOne(id);
+            ResContent resContentList = new ResContent();
+            resContentList.setCityId(1L);
+            resContentList.setContentId(artist.getId());
+            resContentList.setCategoryId(ResourceConstant.INDEX_RECOMMEND_ARTIST_CATEGORY_ID);
+            resContentList.setContentType(ResContentTypeEnum.ARTIST_ENTITY.getCode());
+            resContentList.setImage(artist.getCover());
+            resContentList.setTitle(artist.getName());
+            resContentList.setContent("");
+            resContentList.setCreated(System.currentTimeMillis());
+            resContentList.setUpdated(System.currentTimeMillis());
+            resContentRepository.save(resContentList);
+        }
+    }
+
+    @Test
+    public void addResourceContentINDEX_RECOMMEND_FIELD(){
+        //List<Long> artistIds = Arrays.asList(52L,53L,55L,58L,59L,60L,61L,62L);
+        List<Long> artistIds = Arrays.asList(53L,61L,59L,55L);
+
+        //首页每日推新
+        for ( Long id:artistIds ){
+            Artist artist = artistRepository.findOne(id);
+            ResContent resContentList = new ResContent();
+            resContentList.setCityId(1L);
+            resContentList.setContentId(artist.getId());
+            resContentList.setCategoryId(ResourceConstant.INDEX_RECOMMEND_FIELD_CATEGORY_ID);
+            resContentList.setContentType(ResContentTypeEnum.ARTIST_ENTITY.getCode());
+            resContentList.setImage(artist.getCover());
+            resContentList.setTitle(artist.getName());
+            resContentList.setContent("");
+            resContentList.setCreated(System.currentTimeMillis());
+            resContentList.setUpdated(System.currentTimeMillis());
+            resContentRepository.save(resContentList);
+        }
     }
 
     private static String getRandomImage(){

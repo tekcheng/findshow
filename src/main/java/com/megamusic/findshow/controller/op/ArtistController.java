@@ -10,7 +10,7 @@ import com.megamusic.findshow.domain.Response;
 import com.megamusic.findshow.domain.dto.OpArtistRequestDto;
 import com.megamusic.findshow.domain.entity.Artist;
 import com.megamusic.findshow.domain.entity.ArtistInfo;
-import com.megamusic.findshow.domain.entity.constant.ArtistTypeEnum;
+import com.megamusic.findshow.domain.entity.constant.EntityTypeEnum;
 import com.megamusic.findshow.domain.op.ImageVo;
 import com.megamusic.findshow.domain.op.OpArtistVo;
 import com.megamusic.findshow.domain.vo.CategoryVo;
@@ -53,7 +53,7 @@ public class ArtistController {
      * @return
      */
     @RequestMapping("list")
-    public ModelAndView list(Integer pageNum){
+        public ModelAndView list(Integer pageNum){
         if(pageNum==null){
             pageNum = 0;
         }else{
@@ -111,7 +111,7 @@ public class ArtistController {
         artist.setVideoInfo(opArtistRequestDto.getVideo());
         artist.setCreated(System.currentTimeMillis());
         artist.setUpdated(System.currentTimeMillis());
-        artist.setType(ArtistTypeEnum.ARTIST.getCode());
+        artist.setType(EntityTypeEnum.ARTIST.getCode());
         artist.setSort(opArtistRequestDto.getSort());
         artist.setContactPrice(new BigDecimal(5)); // 此处默认查看联系方式价格为5.00元
         artist.setShortDesc(opArtistRequestDto.getShortDesc());

@@ -3,6 +3,7 @@ package com.megamusic.findshow.service;
 import com.github.wxpay.sdk.WXPay;
 import com.github.wxpay.sdk.WXPayConstants;
 import com.github.wxpay.sdk.WXPayUtil;
+import com.megamusic.findshow.common.utils.CommonUtils;
 import com.megamusic.findshow.common.utils.WXPay.WxPayFsConfig;
 import com.megamusic.findshow.dao.ArtistRepository;
 import com.megamusic.findshow.dao.OrderRepository;
@@ -12,6 +13,7 @@ import com.megamusic.findshow.domain.entity.Artist;
 import com.megamusic.findshow.domain.entity.Order;
 import com.megamusic.findshow.domain.entity.User;
 import com.megamusic.findshow.domain.entity.constant.DeleteCodeEnum;
+import com.megamusic.findshow.domain.entity.constant.EntityTypeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.helpers.MessageFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +21,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by chengchao on 2018/9/28.
@@ -81,7 +80,7 @@ public class WXPayService {
             totalFee = amount.multiply(new BigDecimal(100)).longValue();
 
         //生成订单号
-        String orderNo = generateOrderNo(userId,artistId);
+        String orderNo = CommonUtils.generateOrderNo(userId,artistId);
 
         //订单落库
         Order order = new Order();
@@ -92,9 +91,9 @@ public class WXPayService {
         order.setOrderAmount(amount);
         order.setPayAmount(amount);
         order.setArtistId(artistId);
-        order.setArtistType(artist.getType());
+        order.setArtistType(EntityTypeEnum.ARTIST.getCode());
         order.setOrderType(Order.OrderType.CONTACT.getCode());
-        order.setPayStatus(Order.PayStatus.PAY_SUCCESS.getCode());
+        order.setPayStatus(Order.PayStatus.PASS.getCode());
         order.setIsDeleted(DeleteCodeEnum.NOT_DELETEED.getCode());
         order.setCreated(System.currentTimeMillis());
         order.setUpdated(System.currentTimeMillis());
@@ -162,7 +161,7 @@ public class WXPayService {
      * @param signTypeEnum
      * @return
      */
-    private WXPayRespDto generateWebResponse(String prepayId, WXPayConstants.SignType signTypeEnum) {
+    public WXPayRespDto generateWebResponse(String prepayId, WXPayConstants.SignType signTypeEnum) {
         String nonceStr = WXPayUtil.generateNonceStr();//随机字符串
         String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
         String sign;
@@ -190,6 +189,7 @@ public class WXPayService {
         return wxPayRespDto;
 
     }
+
 
     /**
      * 处理回调
@@ -237,20 +237,6 @@ public class WXPayService {
         order.setTransactionId(wxTranId);
         orderRepository.save(order);
 
-    }
-
-    /**
-     * 生成订单号
-     * @param userId
-     * @param artistId
-     * @return
-     */
-    private static AtomicLong counter = new AtomicLong();
-
-    private static String generateOrderNo(Long userId, Long artistId) {
-        String timestamp = DateTimeFormatter.ofPattern("yyyyMMddHHmmss").format(LocalDateTime.now());
-        long seq = counter.getAndIncrement() % 10000;
-        return String.format("%s%d%s%d", timestamp, userId, artistId.toString(), seq);
     }
 
 

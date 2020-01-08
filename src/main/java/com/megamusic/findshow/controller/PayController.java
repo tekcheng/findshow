@@ -1,6 +1,7 @@
 package com.megamusic.findshow.controller;
 
 import com.megamusic.findshow.common.constant.SystemConstantsEnum;
+import com.megamusic.findshow.common.utils.CommonUtils;
 import com.megamusic.findshow.common.utils.ResponseUtils;
 import com.megamusic.findshow.dao.UserRepository;
 import com.megamusic.findshow.domain.Response;
@@ -63,20 +64,21 @@ public class PayController {
      * 微信支付-查看联系方式
      *
      * @param userId
-     * @param ip
      * @param artistId
      * @param fee
      * @return
      */
     @RequestMapping("wxPayArtistContact")
     @ResponseBody
-    public Response wxPayArtist(String userId, String ip, String artistId, Long fee) {
+    public Response wxPayArtist(String userId,String artistId, Long fee,HttpServletRequest request) {
 
-        if (StringUtils.isEmpty(userId) || StringUtils.isEmpty(ip) || StringUtils.isEmpty(artistId))
+        if (StringUtils.isEmpty(userId) || StringUtils.isEmpty(artistId))
             return ResponseUtils.getErrorResponse(SystemConstantsEnum.PARAM_ERROR);
 
         Long uid = Long.valueOf(userId);
         Long aid = Long.valueOf(artistId);
+        String ip = CommonUtils.getIpAddr(request);
+
 
         WXPayRespDto wxPayRespDto;
         try {

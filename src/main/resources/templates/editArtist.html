@@ -220,7 +220,7 @@
 								    <div class="control-group">
 								    	<br/>
 							          <!-- Textarea -->
-							          <label class="control-label" for="artist_desc">简介(作品&场地信息)：</label>
+							          <label class="control-label" for="artist_desc">简介：</label>
 							          <div class="controls">
 							            <div class="textarea">
 							                  <textarea lass="form-control" id="artist_desc" cols="80" rows="10" name="artist_desc">${artist.description!}</textarea>
@@ -311,7 +311,6 @@
 
 										<div class="alert alert-info">
 											<i class="icon-hand-right"></i>
-											tips：第一张默认作为头像展示
 											<button class="close" data-dismiss="alert">
 												<i class="icon-remove"></i>
 											</button>
@@ -543,6 +542,9 @@
                     $("#artist_news div[class=artist_news_list]").each(function () {
                         var title = $(this).find("input[name=artist_news_title]").val();
                         var url = $(this).find("input[name=artist_news_url]").val();
+                        if( title.trim().length==0 && url.trim().length==0 ){
+                            return;
+                        }
                         var news = {
                             "title":title,
                             "linkUrl":url
@@ -556,6 +558,9 @@
                     $("#artist_experience div[class=artist_experience_list]").each(function () {
                         var type = $(this).find("select[name=artist_experience_type]").val();
                         var detail = $(this).find("input[name=artist_artist_experience_detail]").val();
+                        if( detail.trim().length==0 ){
+                            return;
+                        }
                         var experience = {
                             "type":type,
                             "detail":detail

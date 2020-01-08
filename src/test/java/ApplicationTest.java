@@ -1,10 +1,12 @@
 
 import com.megamusic.findshow.Application;
+import com.megamusic.findshow.dao.AreaRepository;
 import com.megamusic.findshow.dao.ArtistRepository;
 import com.megamusic.findshow.dao.ResCategoryRepository;
 import com.megamusic.findshow.dao.ResContentRepository;
+import com.megamusic.findshow.domain.entity.Area;
 import com.megamusic.findshow.domain.entity.Artist;
-import com.megamusic.findshow.domain.entity.constant.ArtistTypeEnum;
+import com.megamusic.findshow.domain.entity.constant.EntityTypeEnum;
 import com.megamusic.findshow.service.ArtistService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,26 +38,48 @@ public class ApplicationTest {
     @Autowired
     private ResContentRepository resContentRepository;
 
+    @Autowired
+    private AreaRepository areaRepository;
+
 
 
     @Test
     public void test() throws Exception {
+        Area area = new Area();
+        area.setId(1L);
+        area.setCityId(1L);
+        area.setName("测试场地");
 
-        for( int i=0;i<10;i++ ){
-            Artist artist = new Artist();
-            String username = getRandomString(5);
-            artist.setName(username);
-            artist.setType(ArtistTypeEnum.FIELD.getCode());
-            artist.setDescription(getRandomString(20));
-            if( i%2==0 ){
-                artist.setSchedule(false);
-            }else {
-                artist.setSchedule(true);
-            }
-            artistRepository.save(artist);
-        }
+        area.setTag("我是场地の标签");
+        area.setSpTag("我是场地の特性标签");
+
+        area.setAddrDistrict("昌平区");
+        area.setAddrStreet("回龙观东大街");
+        area.setAddrDesc("北京市昌平区回龙观流星花园3区西门水蜜桃保健会所");
+        area.setAddrTag("地址标签-水蜜桃");
+
+        area.setAreaDescription("专注大保健专注大保健专注大保健专注大保健专注大保健专注大保健专注大保健");
+        area.setLaunchedActivities("曾举办：各种大保健");
+
+        area.setConferenceNumber(10L);
+        area.setNumberOfPersons(999L);
+        area.setGuestRoomNumber(99L);
+        area.setSquare(998L);
+
+        area.setEquipment("音箱舞台设备,KTV包房,大屏幕,停车场,会议室,客房,餐区,露台,接送车,私人影院,草坪空地,演讲台,室内浴缸,室内有窗,位于地下");
+        area.setService("桌游电游,SPA按摩,演绎歌手,视频会议,签到台,定制茶歇,儿童设施,可携带宠物,可吸烟");
+
+        area.setImages("http://p4.music.126.net/o0UdVQj7Ayh_uBot-C0-gg==/18588343581098159.jpg?param=200y200,http://p4.music.126.net/9CDqXJo3jrIsYikSLAwYGQ==/488183162739351.jpg?param=200y200");
+
+        area.setStatus(0);
+        area.setCreated(System.currentTimeMillis());
+        area.setUpdated(System.currentTimeMillis());
+        area.setSort(9);
+
+        areaRepository.save(area);
 
     }
+
 
 
 

@@ -1,6 +1,6 @@
 package com.megamusic.findshow.domain.entity;
 
-import com.megamusic.findshow.domain.entity.constant.ArtistTypeEnum;
+import com.megamusic.findshow.domain.entity.constant.EntityTypeEnum;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -43,7 +43,7 @@ public class Artist {
     @Column(length = 2048)
     private String images;//图集
     @Column(nullable = false,columnDefinition="tinyint default 0")
-    private Integer type=ArtistTypeEnum.ARTIST.getCode();
+    private Integer type= EntityTypeEnum.ARTIST.getCode();
     @Column(nullable = false,columnDefinition="tinyint default 1")
     private boolean schedule = true;//是否有档期
     @Column(nullable = false,columnDefinition="tinyint default 0")

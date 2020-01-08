@@ -42,7 +42,7 @@ public class ResourceController {
 
     @RequestMapping("index")
     @ResponseBody
-    public Response index(String cityId){
+    public Response index(String cityId) {
         //获取banner
         List<ResourceVo> bannerList = resourceService.getResContentById(Long.valueOf(cityId),ResourceConstant.INDEX_BANNER_CATEGORY_ID,0,20);
         List<ResourceVo> rcmNewsList = resourceService.getResContentById(Long.valueOf(cityId),ResourceConstant.INDEX_RECOMMEND_NEW_CATEGORY_ID,0,20);

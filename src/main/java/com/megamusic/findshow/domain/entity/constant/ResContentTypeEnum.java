@@ -4,7 +4,7 @@ package com.megamusic.findshow.domain.entity.constant;
  * Created by chengchao on 2018/12/18.
  */
 public enum  ResContentTypeEnum {
-    ENTITY(1,"实体"),LINK(2,"h5页面");
+    LINK(0,"h5页面"),ARTIST_ENTITY(1,"艺人实体"),AREA_ENTITY(2,"场地实体");
 
     private Integer code;
     private String name;

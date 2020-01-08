@@ -1,7 +1,7 @@
 package com.megamusic.findshow.domain.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.megamusic.findshow.domain.entity.constant.ArtistTypeEnum;
+import com.megamusic.findshow.domain.entity.constant.EntityTypeEnum;
 import lombok.Data;
 
 /**
@@ -19,8 +19,10 @@ public class ArtistVo  {
     private String tipTag; //标签
     private String categoryId;
     private String categoryName;
+    private String referencePrice; //参考价
+
     @JsonIgnore
     private String images;
     @JsonIgnore
-    private ArtistTypeEnum type;
+    private EntityTypeEnum type;
 }

@@ -37,9 +37,9 @@ public class ResourceService {
 
     public List<ResourceVo> getResContentById(Long cityId,Long cateId, Integer pageNum, Integer pageSize) {
         //获取资源位
-        ResCategory resCategory = resCategoryRepository.findOne(cateId);
-        if(resCategory==null)
-            return null;
+//        ResCategory resCategory = resCategoryRepository.findOne(cateId);
+//        if(resCategory==null)
+//            return null;
 
         //获取资源位下数据
         if( pageNum==null || pageNum<0 )
@@ -66,14 +66,14 @@ public class ResourceService {
 
         for( ResContent resContent:resContentList  ){
             ResourceVo<String> resourceVo = new ResourceVo<String>();
-            if(resCategory.getType().equals(ResContentTypeEnum.LINK.getCode())){
+            if(resContent.getContentType().equals(ResContentTypeEnum.LINK.getCode())){
                 resourceVo.setContentType(ResContentTypeEnum.LINK.getCode());
                 resourceVo.setImage(resContent.getImage());
                 resourceVo.setTitle(resContent.getTitle());
                 resourceVo.setContent(resContent.getContent());
-            } else if(resCategory.getType().equals(ResContentTypeEnum.ENTITY.getCode())) {
+            } else if(resContent.getContentType().equals(ResContentTypeEnum.ARTIST_ENTITY.getCode())) {
                 resourceVo.setContentId(resContent.getContentId().toString());
-                resourceVo.setContentType(ResContentTypeEnum.ENTITY.getCode());
+                resourceVo.setContentType(ResContentTypeEnum.ARTIST_ENTITY.getCode());
                 resourceVo.setImage(resContent.getImage());
                 resourceVo.setTitle(resContent.getTitle());
             }

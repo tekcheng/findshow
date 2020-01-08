@@ -1,0 +1,494 @@
+<#include "public/header.html">
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<#include "public/menu.html">
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">主页</a>
+							</li>
+
+							<li>
+								<a href="#">艺人管理</a>
+							</li>
+							<li class="active">申请详情</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+                                申请详情
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+
+                                <h4>基本信息：</h4>
+
+
+								<form class="form-horizontal" role="form" id="artist_form" action="/op/area/editDo" method="post" enctype="multipart/form-data">
+									<div class="control-group">
+								          <!-- Text input-->
+								          <label class="control-label" for="area_name">名称 ：</label>
+								          <div class="controls">
+								            <input type="text" placeholder="" class="input-xlarge" id="area_name" name="area_name" value="${artistApplyInfo.name}" readonly="readonly">
+                                              <button  name="copy_input_content" class="btn btn-xs btn-pink copy_input_content" type="button">复制</button>
+                                          </div>
+								    </div>
+
+                                    <div class="control-group">
+                                        <!-- Text input-->
+                                        <label class="control-label" for="area_address">地址 ：</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="input-xlarge" id="area_address" name="area_address" value="${artistApplyInfo.address!}" readonly="readonly">
+                                            <button  name="copy_input_content" class="btn btn-xs btn-pink copy_input_content" type="button">复制</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label" for="area_phone">电话 ：</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="input-xlarge" id="area_phone" name="area_phone" value="${artistApplyInfo.phone!}" readonly="readonly">
+                                            <button  name="copy_input_content" class="btn btn-xs btn-pink copy_input_content" type="button">复制</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label" for="area_weixin">微信 ：</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="input-xlarge" id="area_weixin" name="area_weixin" value="${artistApplyInfo.weixin!}" readonly="readonly">
+                                            <button  name="copy_input_content" class="btn btn-xs btn-pink copy_input_content" type="button">复制</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label" for="area_tag">标签 ：</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="input-xlarge" id="area_tag" name="area_tag" value="${artistApplyInfo.simpleTag!}" readonly="readonly">
+                                            <button  name="copy_input_content" class="btn btn-xs btn-pink copy_input_content" type="button">复制</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label" for="area_price">价格 ：</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="" class="input-xlarge" id="area_price" name="area_price" value="${artistApplyInfo.price!}" readonly="readonly">
+                                            <button  name="copy_input_content" class="btn btn-xs btn-pink copy_input_content" type="button">复制</button>
+                                        </div>
+                                    </div>
+
+
+
+                                    <br/>
+                                        <h4>其他信息：</h4>
+                                    <br/>
+
+                                    <div class="control-group">
+                                        <br/>
+                                        <!-- Textarea -->
+                                        <label class="control-label" for="area_desc">简介：</label>
+                                        <div class="controls">
+                                            <div class="textarea">
+                                                <textarea lass="form-control" id="area_desc" cols="80" rows="10" name="area_desc" readonly="readonly">${artistApplyInfo.intro!}</textarea>
+                                                <button  name="copy_input_content" class="btn btn-xs btn-pink copy_textarea_content" type="button">复制</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <br/>
+                                        <!-- Textarea -->
+                                        <label class="control-label" for="area_launchedActivities">经历：</label>
+                                        <div class="controls">
+                                            <div class="textarea">
+                                                <textarea lass="form-control" id="area_launchedActivities" cols="80" rows="10" name="area_launchedActivities" readonly="readonly">${artistApplyInfo.experience!}</textarea>
+                                                <button  name="copy_input_content" class="btn btn-xs btn-pink copy_textarea_content" type="button">复制</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+									<br/>
+									<!-- 视频-->
+									<label class="control-label" for="artist_news">视频 ：</label>
+                                    <!--<button  id="add_artist_news" class="btn btn-xs btn-pink" type="button">添加</button>-->
+									<br/>
+									<div class="control-group" id="artist_news">
+                                            <#if videoList??>
+                                                <#list videoList as _e>
+                                                    <br/>
+                                                    <div class="artist_news_list">
+                                                        <input type="text" placeholder="" class="input-xlarge" name="artist_news_title" value="${_e!}" readonly="readonly">
+                                                        <button  name="copy_input_content" class="btn btn-xs btn-pink copy_input_content" type="button">复制</button>
+                                                        <!--&nbsp; &nbsp; <button class="btn btn-xs del_artist_news" type="button">删除</button>-->
+                                                    </div>
+                                                </#list>
+                                            </#if>
+
+
+									</div>
+
+									<br/>
+									<br/>
+
+
+
+                                    <div id="artist_images_div">
+                                        <#list imgList as img>
+                                            <input type='hidden'  name='images' value='${img.url}' id='${img.id}'>
+                                        </#list>
+                                    </div>
+
+
+                                </form>
+
+                                <!--<div class="control-group">-->
+                                    <!--<br/>-->
+                                    <!--<label for="artist_avatar">封面图：</label>-->
+                                    <!--<br/>-->
+                                    <!--<div class="file-loading">-->
+                                        <!--<input id="artist_avatar" name="fileName" type="file">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+
+
+                                    <div class="control-group">
+										<br/>
+										<label for="artist_images">图集：</label>
+
+										<br/>
+										<!-- PAGE CONTENT BEGINS -->
+
+										<div class="file-loading">
+										    <input id="artist_images" name="fileName" type="file" multiple>
+										</div>
+									</div>
+
+
+                            <br/>
+                            <br/>
+
+
+
+                                <!--<div class="clearfix form-actions">-->
+                                    <!--<div class="col-md-offset-3 col-md-9">-->
+                                        <!--<button class="btn btn-info" type="button" id="artist_form_sub">-->
+                                            <!--<i class="icon-ok bigger-110"></i>-->
+                                            <!--Submit-->
+                                        <!--</button>-->
+                                        <!--&nbsp; &nbsp; &nbsp;-->
+                                        <!--<button class="btn" type="reset">-->
+                                            <!--<i class="icon-undo bigger-110"></i>-->
+                                            <!--Reset-->
+                                        <!--</button>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+
+                            </div><!-- /.col -->
+
+
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+				<div class="ace-settings-container" id="ace-settings-container">
+					<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+						<i class="icon-cog bigger-150"></i>
+					</div>
+
+				</div><!-- /#ace-settings-container -->
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+
+        <!-- inline scripts related to this page -->
+		<script src="/serverstatic/bootstrap-fileinput/js/fileinput.min.js"></script>
+		<script src="/serverstatic/bootstrap-fileinput/js/locales/zh.js"></script>
+
+		<script type="text/javascript">
+			jQuery(function($) {
+			    $('#id-disable-check').on('click', function() {
+					var inp = $('#form-input-readonly').get(0);
+					if(inp.hasAttribute('disabled')) {
+						inp.setAttribute('readonly' , 'true');
+						inp.removeAttribute('disabled');
+						inp.value="This text field is readonly!";
+					}
+					else {
+						inp.setAttribute('disabled' , 'disabled');
+						inp.removeAttribute('readonly');
+						inp.value="This text field is disabled!";
+					}
+				});
+			
+			
+				$(".chosen-select").chosen(); 
+				$('#chosen-multiple-style').on('click', function(e){
+					var target = $(e.target).find('input[type=radio]');
+					var which = parseInt(target.val());
+					if(which == 2) $('#form-field-select-4').addClass('tag-input-style');
+					 else $('#form-field-select-4').removeClass('tag-input-style');
+				});
+			
+				$('textarea[class*=autosize]').autosize({append: "\n"});
+				$('textarea.limited').inputlimiter({
+					remText: '%n character%s remaining...',
+					limitText: 'max allowed : %n.'
+				});
+
+
+                //上传提交相关。
+				$("#artist_images").fileinput({
+                    showCaption: false,
+                    uploadUrl: "/common/batchUpload",
+                    uploadAsync: false,//是否为异步上传
+                    minFileCount: 1,
+                    maxFileCount: 10,
+                    maxFileSize: 1024*5,//单位为kb，如果为0表示不限制文件大小
+                    showUpload: true, // 隐藏下方上传按钮
+                    showRemove: true, // 隐藏下方移除按钮
+
+                    overwriteInitial: false,
+                    initialPreview: [
+                        <#list imgList as img>
+                            "<img class='file-preview-image kv-preview-data' src='${img.url}'/>",
+                        </#list>
+                    ],
+                    initialPreviewConfig: [
+                        <#list imgList as img>
+                            {caption: "${img.url}", url: "/op/artist/delete/img", key: "${img.id}" },
+                        </#list>
+                    ]
+
+				}).on("filebatchuploadsuccess", function(event, data, previewId, index) {
+                    var resp = data.response;
+                    if( resp.code==1001 && resp.data!=null ){
+                        resp.data.forEach(function(e){
+                            console.log(e);
+                            $("#artist_images_div").append("<input type='hidden'  name='images' value='"+e.url+"' id='"+e.id+"'>");
+                        });
+                        console.log("upload succ  form submit");
+                        $("#artist_avatar").fileinput("upload");
+
+                    }else{
+                        console.log("upload img callback error!")
+                    }
+                });
+
+
+
+
+                //删除操作后回调
+                $('#artist_images').on('filedeleted', function(event, id) {
+                    console.log("remove ele is :"+id)
+                    $("#"+id).remove();
+                });
+
+                //先上传图片 上传回调的时候提交表单
+                $("#artist_form_sub").click(function(){
+                    //真tm 麻烦，有图集变更就上传，没有就跳过，有头像变更就上传，没有就跳过
+                    if( $("#artist_images").val()!="" ){
+                        $("#artist_images").fileinput("upload");
+                    }else{
+                        if($("#artist_avatar").val()!=""){
+                            $("#artist_avatar").fileinput("upload");
+                        } else {
+                            submitData();
+                        }
+                    }
+                });
+
+
+				//页面提交
+				function submitData() {
+					//获取数据
+                    var area_id = $("#area_id").val();
+					var area_name = $("#area_name").val();  //名称
+                    var area_city = $("#area_city").val(); //城市
+                    var area_sort = $("#area_sort").val(); //权重
+                    var area_district = $("#area_district").val(); //区
+                    var area_street = $("#area_street").val(); //街道
+                    var area_addrtag = $("#area_addrtag").val(); //地址标签
+                    var area_addrdesc = $("#area_addrdesc").val(); //地址详情
+                    var area_square = $("#area_square").val(); //面积
+                    var area_numberPerson = $("#area_numberPerson").val(); //容纳人数
+                    var area_conferenceNumber = $("#area_conferenceNumber").val(); //会议室数量
+                    var area_guestRoomNumber = $("#area_guestRoomNumber").val(); //客房数量
+
+                    var area_tag = $("#area_tag").val(); //场地标签
+                    var area_spTag = $("#area_spTag").val(); //特性标签
+					var area_desc = $("#area_desc").val(); //场地简介
+					var area_launchedActivities = $("#area_launchedActivities").val(); //举办活动
+                    var artist_avatar = $("#artist_avatar_url").val();//头像
+
+                    var images = [];
+					$("#artist_images_div input[type=hidden]").each(function () {
+						images.push(this.value);
+                    }); //图片
+
+                    //设备
+                    var area_equipment = [];
+                    $("#artist_news div[class=artist_news_list]").each(function () {
+                        var title = $(this).find("input[name=artist_news_title]").val();
+                        if( title.trim().length==0  ){
+                            return;
+                        }
+                        area_equipment.push(title);
+                    });
+
+
+                    //服务
+                    var area_service = [];
+                    $("#artist_experience div[class=artist_experience_list]").each(function () {
+                        var detail = $(this).find("input[name=artist_artist_experience_detail]").val();
+                        if( detail.trim().length==0 ){
+                            return;
+                        }
+                        area_service.push(detail);
+                    });
+
+
+					var data = {
+                        id:area_id,
+                        name:area_name,
+                        cityId : area_city,
+                        sort:area_sort,
+                        district : area_district,
+                        street:area_street,
+                        addrTag :area_addrtag,
+                        addrDesc : area_addrdesc,
+                        square : area_square,
+                        numberOfPersons : area_numberPerson,
+                        conferenceNumber : area_conferenceNumber,
+                        guestRoomNumber : area_guestRoomNumber,
+                        tag : area_tag,
+                        spTag : area_spTag,
+                        description:area_desc,
+                        launchedActivities:area_launchedActivities,
+
+                        avatar:artist_avatar,
+                        images:images,
+
+                        equipment:area_equipment,
+                        service:area_service
+
+					};
+
+					console.log(data);
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "/op/area/editDo",
+                        dataType: 'json',
+                        contentType: 'application/json;charset=UTF-8',
+                        data: JSON.stringify(data),
+                        success: function(data){
+                            if( data.code==1001){
+                                alert("更新成功");
+                            }else{
+                                alert("更新失败");
+                            }
+                            //window.location.reload();
+                        }
+                    });
+
+                }
+
+
+
+                //添加场地设备
+                $(document).on( 'click','#add_artist_news',add_artist_news_view);
+                function add_artist_news_view() {
+                    $("#artist_news").append(html);
+                }
+                var html = [
+							'<div class="artist_news_list">',
+                    		'<br/>',
+							'<input type="text" placeholder="" class="input-xlarge" name="artist_news_title">',
+							'&nbsp; &nbsp; <button class="btn btn-xs del_artist_news" type="button">删除</button>',
+							'</div>'
+                        ].join("")
+
+				//删除设备
+				$(document).on('click',".del_artist_news",function () {
+                    $(this).parent().remove();
+                });
+
+
+
+
+                //添加场地服务
+                $(document).on( 'click','#add_artist_experience',add_artist_experience_view);
+                function add_artist_experience_view() {
+                    $("#artist_experience").append(html2);
+                }
+                var html2 = [
+                    '<div class="artist_experience_list">',
+                    '<br/>',
+                    '<input type="text" placeholder="" class="input-xlarge" name="artist_artist_experience_detail">',
+                    '&nbsp; &nbsp; <button class="btn btn-xs del_artist_experience" type="button">删除</button>',
+                    '</div>'
+                ].join("")
+
+                //删除场地服务
+                $(document).on('click',".del_artist_experience",function () {
+                    $(this).parent().remove();
+                })
+
+			});
+
+
+            //复制
+            $(document).on('click',".copy_input_content",function () {
+                var Url=$(this).parent().find("input");
+                Url.select(); // 选择对象
+                document.execCommand("Copy"); // 执行浏览器复制命令
+                //alert("复制成功！");
+            });
+
+            $(document).on('click',".copy_textarea_content",function () {
+                var content=$(this).parent().find("textarea");
+                content.select(); // 选择对象
+                document.execCommand("Copy"); // 执行浏览器复制命令
+                //alert("复制成功！");
+            });
+
+
+		</script>
+
+
+
+	
+</body>
+</html>

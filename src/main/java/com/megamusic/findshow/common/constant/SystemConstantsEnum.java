@@ -8,7 +8,9 @@ public enum SystemConstantsEnum {
     PARAM_ERROR(1002, "param_error", "参数异常"),
     VERIFY_CODE_WRONG(1003, "check_verify_code_wrong", "验证码错误"),
     FAIL(4004, "fail", "失败"),
-    CALL_REMOTE_FAIL(4005, "call_remote_fail", "调用远程服务失败");
+    CALL_REMOTE_FAIL(4005, "call_remote_fail", "调用远程服务失败"),
+    PHONE_APPLY_IS_EXISTS(4006,"phone_apply_is_exists","该手机号已经提交过入驻申请")
+    ;
 
     private Integer code;
     private String value;

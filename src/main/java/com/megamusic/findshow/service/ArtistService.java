@@ -9,7 +9,7 @@ import com.megamusic.findshow.domain.entity.Artist;
 import com.megamusic.findshow.domain.entity.ArtistInfo;
 import com.megamusic.findshow.domain.entity.Category;
 import com.megamusic.findshow.domain.entity.Order;
-import com.megamusic.findshow.domain.entity.constant.ArtistTypeEnum;
+import com.megamusic.findshow.domain.entity.constant.EntityTypeEnum;
 import com.megamusic.findshow.domain.entity.constant.CityEnum;
 import com.megamusic.findshow.domain.entity.constant.DeleteCodeEnum;
 import com.megamusic.findshow.domain.vo.ArtistDetailVo;
@@ -83,12 +83,13 @@ public class ArtistService {
             ArtistVo artistVo = new ArtistVo();
             artistVo.setId(artist.getId() + "");
             artistVo.setName(artist.getName());
-            artistVo.setType(ArtistTypeEnum.getEnumByCode(artist.getType()));
+            artistVo.setType(EntityTypeEnum.getEnumByCode(artist.getType()));
             artistVo.setShortDesc(artist.getShortDesc());
             artistVo.setShortDesc2(artist.getShortDesc2());
             artistVo.setCover(artist.getCover());
             artistVo.setPopularity(artist.getPopularity());
             artistVo.setTipTag(artist.getTipTag());
+            artistVo.setReferencePrice(artist.getPrice());
             if (artist.getCategoryId() != null) {
                 artistVo.setCategoryId(artist.getCategoryId().toString());
                 Category category = categoryMap.get(artist.getCategoryId());
@@ -166,7 +167,8 @@ public class ArtistService {
         artistDetailVo.setShowContact(false);
         //判断联系方式是否可见
         if (userId != null) {
-            Order order = orderRepository.getByUserIdAndArtistIdAndPayStatus(userId, artistId, Order.PayStatus.CALLBACK.getCode());
+            Order order = orderRepository.getByUserIdAndArtistIdAndPayStatusAndOrderType(userId, artistId,
+                    Order.PayStatus.CALLBACK.getCode(), Order.OrderType.CONTACT.getCode());
             if(order!=null){
                 artistDetailVo.setShowContact(true);
                 artistDetailVo.setWeibo(artistInfo.getWeibo());
@@ -197,9 +199,4 @@ public class ArtistService {
         return resultMap;
     }
 
-
-    public List<ArtistVo> getRecommendArtist(Integer pageNum, Integer pageSize) {
-        List<ArtistVo> resultList = new ArrayList<ArtistVo>();
-        return null;
-    }
 }
